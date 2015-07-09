@@ -1,0 +1,10 @@
+.message .menu ul {
+    list-style: none;
+    margin:0;
+    padding:0;
+}
+
+.message .menu ul li {
+    display:inline-block;
+
+}

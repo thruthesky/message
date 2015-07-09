@@ -1,0 +1,20 @@
+{% set message = data.message %}
+
+<h1>{{ message.label }}</h1>
+<div class="content">
+    {{ message.content.value | e }}
+</div>
+
+
+
+
+<a href="/message/send?receiver={{ message.send_id.entity.name.value }}">
+    [ Reply ]
+</a>
+
+
+<a href="/message/delete?id={{ message.id.value }}">
+    [ Delete ]
+    You can delete messages that you have sent to others
+    Only if the other didn't not read the message yet.
+</a>

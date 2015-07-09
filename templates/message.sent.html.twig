@@ -1,0 +1,10 @@
+{% for message in data.list %}
+    <div class="row">
+        <a href="/message/view?id={{ message.id.value }}">
+            <span class="sender">sender name</span>
+            <span class="title">{{ message.title.value }}</span>
+            <span class="date">date/time</span>
+            <span class="read">if it's read</span>
+        </a>
+    </div>
+{% endfor %}

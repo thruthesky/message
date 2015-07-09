@@ -15,6 +15,17 @@ function message_theme()
 function message_preprocess( &$variables, $hook )
 {
     $variables['dir_message'] = 'modules/message';
+
+    if ( isMessagePage() ) {
+        $variables['#attached']['library'][] = 'message/default';
+    }
 }
 
-
+function isMessagePage() {
+    $request = \Drupal::request();
+    $uri = $request->getRequestUri();
+    if ( strpos( $uri, '/message') !== FALSE ) {
+        return TRUE;
+    }
+    else return FALSE;
+}

@@ -1,4 +1,4 @@
-global-styling:
+default:
   version: 1.x
   js:
     js/message.js: {}
@@ -10,4 +10,5 @@ global-styling:
       css/message.base.css: {}
       css/message.layout.css: {}
       css/message.component.css: {}
+      css/message.component.menu.css: {}
       css/message.state.css: {}

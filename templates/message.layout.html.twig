@@ -1,23 +1,39 @@
 <script type="text/javascript">
     var messageLanguageCode = 'en';
-    if ( location.host.indexOf('sonub') != -1 ) messageLanguageCode = 'ko';
+    if ( location.host.indexOf('philgo') != -1 ) messageLanguageCode = 'ko';
     var messageLanguage = [];
     messageLanguage['Wrong access'] = {
         'en': 'Wrong access : No page code',
         'ko' :'잘못된 접근 : 페이지 값이 없습니다.'
+    };
+    messageLanguage['send'] = {
+        'en': 'SEND',
+        'ko' :'쪽지보내기'
+    };
+    messageLanguage['sent'] = {
+        'en': 'SENT',
+        'ko' :'보낸 쪽지 목록'
+    };
+    messageLanguage['list'] = {
+        'en': 'INBOX',
+        'ko' :'받은 쪽지 목록'
     };
     function ml(code) {
         document.write(messageLanguage[code][messageLanguageCode]);
     }
 </script>
 {% import dir_message ~ '/templates/macro/html.html.twig' as html %}
-<section class="post">
-
+<section class="message">
     <div class="{{ data.page }}">
-        {% if data.page %}
-            {% include dir_message ~ '/templates/message.' ~ data.page ~ '.html.twig' %}
+        {% if data.error %}
+            {{ html.error(data) }}
         {% else %}
-            <script>ml('Wrong access');</script>
+            {% if data.page %}
+                {% include dir_message ~ '/templates/message.menu.html.twig' %}
+                {% include dir_message ~ '/templates/message.' ~ data.page ~ '.html.twig' %}
+            {% else %}
+                <script>ml('Wrong access');</script>
+            {% endif %}
         {% endif %}
     </div>
 </section>
