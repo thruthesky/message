@@ -1,0 +1,8 @@
+section.message .row {
+	padding: 10px;
+	border-top: 2px solid #afafaf;
+}
+
+section.message .row .info{
+	overflow:hidden;
+}

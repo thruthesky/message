@@ -1,11 +1,13 @@
 {% for message in data.list %}
-    <div class="row">
-        <a href="/message/view?id={{ message.id.value }}">
-            <span class="sender">{{ message.send_id.entity.name.value }}</span>
-            <span class="no">{{ message.id.value }}</span>
-        <span class="title">{{ message.title.value }}</span>
-        <span class="date">{{ message.created.value | date('Y-m-d') }}</span>
-        <span class="read">if it's read</span>
-        </a>
+    <div class="row">	
+		<div class='info'>
+			<a href="/message/view?id={{ message.id.value }}">
+				<span class="sender">{{ message.send_id.entity.name.value }}</span>
+				<span class="no">{{ message.id.value }}</span>
+				<span class="title">{{ message.title.value }}</span>
+				<span class="date">{{ message.created.value | date('Y-m-d') }}</span>
+				<span class="read">if it's read</span>
+			</a>
+		</div>
     </div>
 {% endfor %}

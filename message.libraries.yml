@@ -12,3 +12,4 @@ default:
       css/message.component.css: {}
       css/message.component.menu.css: {}
       css/message.state.css: {}
+      css/message.list.component.css: {}

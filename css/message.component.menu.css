@@ -1,10 +1,39 @@
-.message .menu ul {
-    list-style: none;
-    margin:0;
-    padding:0;
+.message .menu ul {    
+	padding:0;
+    margin:0 0 10px 0; 
+	list-style: none;
 }
 
 .message .menu ul li {
-    display:inline-block;
+    display:inline-block;	
+	width:33.33%;
+	border:1px solid #afafaf;
+	border-top:2px solid #afafaf;
+	background-color:#f1f1f1;
+	box-sizing:border-box;
+	text-align:center;
+}
 
+.message .menu ul li {
+    border-left:0;
+}
+
+.message .menu ul li:first-child {
+    border-left:1px solid #afafaf;
+}
+
+.message .menu ul li.selected {	
+    border-bottom:0;
+	background-color:#fff;
+}
+
+.message .menu ul li a {
+	display:inline-block;
+	padding:10px 20px;
+	font-weight:bold;
+    color:#7a7a7a;	
+}
+
+.message .menu ul li a:hover {
+	color:#2695d5;
 }
