@@ -1,10 +1,51 @@
-{% for message in data.list %}
-    <div class="row">
-        <a href="/message/view?id={{ message.id.value }}">
-            <span class="sender">sender name</span>
-            <span class="title">{{ message.title.value }}</span>
-            <span class="date">date/time</span>
-            <span class="read">if it's read</span>
-        </a>
-    </div>
-{% endfor %}
+{% import dir_macro ~ '/functions.html.twig' as html %}
+{% if data.list %}
+	<div class='table-list'>
+	{% for message in data.list %}
+		<a href="/message/view?id={{ message.id.value }}" class="row{{ message.checked.value == 1 ? " checked" }}">
+			<div class='td checkbox'>
+				<div class='checkbox-wrapper'><input type='checkbox' name='command_checkbox' value='{{ message.id.value }}'/></div>
+			</div>
+			<div class='td sender'>
+				<div class="sender">{{ message.send_id.entity.name.value }}</div>
+				<div class="title less_640">					
+						{{ message.title.value }}					
+				</div>	
+			</div>
+			<div class='td title'>
+				<div class="title">{{ message.title.value }}</div>
+			</div>
+			<div class='td date'>
+				<div class="date">{{ html.humanTimingMessageUnique( message.created.value ) }}</div>
+			</div>
+		</a>
+	{% endfor %}
+	</div>
+	<div class='page-wrapper'>
+		{% if data.page_num <= 1 %}
+			{% set start = 1 %}
+			{% set end = data.per_page %}			
+		{% else %}
+			{% set start = data.page_num * data.per_page - data.per_page + 1 %}
+			{% set end = data.page_num * data.per_page %}
+		{% endif %}
+		
+		{% if end > data.total_messages %}
+			{% set end = data.total_messages %}
+		{% endif %}
+		
+		{% set prev_page_url = '?page_num='~( data.page_num - 1 ) %}
+		{% set next_page_url = '?page_num='~( data.page_num + 1 ) %}
+		
+		{% if data.page_num <= 1 %}
+			{% set prev_page_url = '#' %}			
+		{% endif %}
+		{% if data.page_num >= data.total_pages %}			
+			{% set next_page_url = '#' %}
+		{% endif %}
+		
+		<span>{{ start }} - {{ end }}</span> of <span>{{ data.total_messages }}</span><a href='{{ prev_page_url }}' class='arrow left'><</a><a href='{{ next_page_url }}' class='arrow right'>></a>
+	</div>		
+{% else %}
+	<h2>No messages found</h2>
+{% endif %}
