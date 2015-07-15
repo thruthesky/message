@@ -40,8 +40,11 @@ class MessageController extends ControllerBase {
 		$input = self::input();		
 		//just used for total...
         $result = db_select('we_message')->fields(null, ['id']);
-		if( $data['page'] == 'list ' ) $result = $result->condition( 'user_id' , self::uid() );
-		else if( $data['page'] == 'unread' ) $result = $result->condition( 'checked' , 0 );
+		if( $data['page'] == 'list' ) $result = $result->condition( 'user_id' , self::uid() );
+		else if( $data['page'] == 'unread' ){
+			$result = $result->condition( 'user_id' , self::uid() );
+			$result = $result->condition( 'checked' , 0 );
+		}
 		else if( $data['page'] == 'sent' ) $result = $result->condition( 'send_id' , self::uid() );		
 		$result = $result->orderBy('id', 'DESC')->execute();
 		
@@ -71,10 +74,13 @@ class MessageController extends ControllerBase {
 			$page_num = 1;
 			$from = 0;
 		}
-		//di( $input );
+		
         $result_paged = db_select('we_message')->fields(null, ['id']);
-        if( $data['page'] == 'list ' ) $result_paged = $result_paged->condition( 'user_id' , self::uid() );
-		else if( $data['page'] == 'unread' ) $result_paged = $result_paged->condition( 'checked' , 0 );
+        if( $data['page'] == 'list' ) $result_paged = $result_paged->condition( 'user_id' , self::uid() );
+		else if( $data['page'] == 'unread' ){
+			$result_paged = $result_paged->condition( 'user_id' , self::uid() );
+			$result_paged = $result_paged->condition( 'checked' , 0 );
+		}
 		else if( $data['page'] == 'sent' ) $result_paged = $result_paged->condition( 'send_id' , self::uid() );
 		$result_paged = $result_paged->orderBy('id', 'DESC')->range( $from , $per_page)->execute();
 			

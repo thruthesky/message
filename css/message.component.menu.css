@@ -116,7 +116,7 @@
 	box-sizing:border-box;
 }
 
-.message .message-commands > span{
+.message .message-commands > span, .message .message-commands > a{
 	float:left;
 	display:inline-block;
 	height:35px;
@@ -135,9 +135,26 @@
 	top:2px;
 }
 
-/*ep message-commands*/
+/*eo message-commands*/
 
+/*view page specific*/
+.message .message-commands > a.delete{
+	padding:7px 15px;
+	cursor:pointer;
+}
 
+.message .message-commands > span.report{
+	position:relative;
+	padding-left:35px;
+	cursor:pointer;
+}
+
+.message .message-commands > span.report > img{
+	position:absolute;
+	left:10px;
+	top:10px;
+}
+/*eo view page specific*/
 
 
 

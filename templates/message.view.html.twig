@@ -1,20 +1,39 @@
 {% set message = data.message %}
-
-<h1>{{ message.label }}</h1>
-<div class="content">
-    {{ message.content.value | e }}
+<div class='user-info'>
+	<div class='photo'><img src='/modules/message/img/no_primary_photo.png'/></div>
+	<div class='info'>
+		<a class='reply top' href="/message/send?receiver={{ message.send_id.entity.name.value }}">
+			<img src='/modules/message/img/reply.png'/>Reply 
+		</a>
+		<div class='name'>{{ message.send_id.entity.name.value }}</div>
+		<div class='date'>{{ message.created.value|date("F d,Y | h:i A") }}</div>
+		<div class='location'>Lives in the Philippines</div>		
+	</div>
+</div>
+<div class='message'>
+	<div class='title'>
+		<span class='label'>
+			Subject:
+		</span>		
+		{{ message.label }}
+	</div>
+	<div class="content">
+		{{ message.content.value | e }}
+	</div>
+	<div class='files'>
+		FILES HERE
+	</div>
 </div>
 
 
-
-
-<a href="/message/send?receiver={{ message.send_id.entity.name.value }}">
-    [ Reply ]
+<a class='reply bottom' href="/message/send?receiver={{ message.send_id.entity.name.value }}">
+    <img src='/modules/message/img/reply.png'/>Reply 
 </a>
 
 
-<a href="/message/delete?id={{ message.id.value }}">
+<a class='delete view' href="/message/delete?id={{ message.id.value }}" style='display:none;'>
     [ Delete ]
     You can delete messages that you have sent to others
     Only if the other didn't not read the message yet.
 </a>
+

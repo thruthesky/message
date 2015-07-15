@@ -1,12 +1,17 @@
 {#
 Need to get what page the user is currently in for the selected class of "li"
 #}
+{% if data.page == 'view' %}
+	{% set self_id =  data.member.id %}
+	{% set send_id =  data.message.send_id.target_id %}
+{% endif %}
+
 <div class='menu-wrapper clearfix'>
 	<div class="menu clearfix">
 		<table cellpadding=0 cellspacing=0 width='100%'>
 			<tr>
 				<td>
-					<a class='menu-item{{data.page == 'list' ? " selected"}}' href="/message/list">
+					<a class='menu-item{{data.page == 'list' or ( data.page == 'view' and self_id == send_id ) ? " selected"}}' href="/message/list">
 						<script>ml('list')</script>
 					</a>
 				</td>
@@ -16,7 +21,7 @@ Need to get what page the user is currently in for the selected class of "li"
 					</a>
 				</td>
 				<td>
-					<a class='menu-item{{data.page == 'sent' ? " selected"}}' href="/message/sent">
+					<a class='menu-item{{data.page == 'sent' or ( data.page == 'view' and self_id != send_id )  ? " selected"}}' href="/message/sent">
 						<script>ml('sent')</script>
 					</a>
 				</td>
@@ -39,9 +44,9 @@ Need to get what page the user is currently in for the selected class of "li"
 		{% if data.page_type != 'view' %}
 		<span class='checkbox-wrapper'><input type='checkbox'></span>
 		{% endif %}
-		<span><img src='/modules/message/img/trash.png'/></span>
+		<a href = "#" class='delete'><img src='/modules/message/img/trash.png'/></a>
 		{% if data.page_type == 'view' %}
-			<span>Report</span>
+			<span class='report'><img src='/modules/message/img/report.png'/>Report</span>
 		{% else %}
 			<span>Mark as Read</span>
 		{% endif %}
