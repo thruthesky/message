@@ -42,6 +42,7 @@ section.message .table-list .row.checked{
 
 section.message .table-list .td > div{
 	padding:13px;
+	overflow:hidden;	
 }
 
 section.message .table-list .td > div.checkbox-wrapper{
@@ -70,11 +71,12 @@ section.message .table-list .td.sender{
 section.message .table-list .td.sender > div{
 	position:relative;	
 	height:15px;
-	padding:0 5px;
+	padding:0 5px;	
 }
 
 section.message .table-list .td.sender > div.sender{
 	top:-5px;
+	white-space:nowrap;
 }
 
 section.message .table-list .td.sender > div.title{
@@ -89,6 +91,11 @@ section.message .table-list .td.title{
 	width:69%;
 	text-align:left;
 	display:none;
+}
+
+section.message .table-list .td.title > div{
+	padding:0;
+	height:15px;
 }
 
 section.message .table-list .td.date{
