@@ -14,3 +14,4 @@ default:
       css/message.state.css: {}
       css/message.list.component.css: {}
       css/message.view.component.css: {}
+      css/message.send.component.css: {}

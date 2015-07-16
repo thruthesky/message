@@ -74,9 +74,9 @@
 	width:100%;
 }
 
-.message .message-search form .buttons{
+.message .message-search form .buttons{	
 	float:right;
-	width:123px;
+	width:123px;	
 }
 
 .message .message-search form .buttons input[type='submit']{
@@ -92,7 +92,7 @@
 .message .message-search form input, .message-search form span{
 	display:inline-block;
 	height:25px;	
-	padding:5px 10px 5px 10px;
+	padding:5px 10px;
 	box-sizing:border-box;	
 }
 

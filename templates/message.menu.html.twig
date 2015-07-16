@@ -11,7 +11,8 @@ Need to get what page the user is currently in for the selected class of "li"
 		<table cellpadding=0 cellspacing=0 width='100%'>
 			<tr>
 				<td>
-					<a class='menu-item{{data.page == 'list' or ( data.page == 'view' and self_id == send_id ) ? " selected"}}' href="/message/list">
+					{#if the member_id is not equal to send_id ( sender ) then it is inbox #}
+					<a class='menu-item{{data.page == 'list' or ( data.page == 'view' and self_id != send_id ) ? " selected"}}' href="/message/list">
 						<script>ml('list')</script>
 					</a>
 				</td>
@@ -21,7 +22,8 @@ Need to get what page the user is currently in for the selected class of "li"
 					</a>
 				</td>
 				<td>
-					<a class='menu-item{{data.page == 'sent' or ( data.page == 'view' and self_id != send_id )  ? " selected"}}' href="/message/sent">
+					{#if the member_id is equal to send_id ( sender ) then it is sent #}
+					<a class='menu-item{{data.page == 'sent' or ( data.page == 'view' and self_id == send_id )  ? " selected"}}' href="/message/sent">
 						<script>ml('sent')</script>
 					</a>
 				</td>

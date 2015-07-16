@@ -1,0 +1,77 @@
+.send .message-send {
+	margin-top:5px;
+}
+
+.send .message-send fieldset{
+	padding:0;
+	margin:0;
+	border:0;
+}
+
+.send .message-send .row.data-set{
+	border:1px solid #afafaf;
+	border-top:0;
+}
+
+.send .message-send .row.data-set.receiver{
+	border-top:1px solid #afafaf;
+}
+
+.send .message-send .row.data-set label{
+	float:left;
+	height:34px;
+	width:75px;
+	padding:10px;
+	background-color:#f1f1f1;
+	box-sizing:border-box;	
+}
+
+.send .message-send .row.data-set .text{
+	overflow:hidden;
+}
+
+.send .message-send .row.data-set .text input{
+	height:34px;
+	width:100%;
+	padding:10px;
+	border:0;
+	box-sizing:border-box;
+}
+
+.send .message-send .row.data-set.content label{
+	display:none;
+}
+
+.send .message-send .row.data-set.content textarea{
+	height:200px;
+	width:100%;	
+	padding:10px;
+	border:0;	
+	resize:none;
+	box-sizing:border-box;
+}
+
+.send .message-send .buttons{
+	border:1px solid #afafaf;
+	border-top:0;
+	background-color:#edf0f5;
+}
+
+.send .message-send .buttons > span{
+	display:inline-block;
+	padding:7px 10px;
+	border-right:1px solid #afafaf;
+	color:#5e5e5e;
+}
+
+.send .message-send .buttons > input[type='submit']{
+	float: right;
+	display: inline-block;
+	padding: 4px 10px 5px 10px;
+	margin: 3px 5px 0 0;
+	border: 0;
+	border-radius: 2px;
+	background-color: #1886c5;
+	font-weight: bold;
+	color: #fff;
+}

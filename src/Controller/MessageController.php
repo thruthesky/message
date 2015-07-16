@@ -148,8 +148,11 @@ class MessageController extends ControllerBase {
     private static function view(&$data) {
         $message= Message::load(\Drupal::request()->get('id'));
 		if( $message->checked->value == 0 ){
-			$message->set( 'checked',1 );
-			$message->save();
+			if( self::uid() == $message->user_id->target_id ){				
+				//only mark as read when viewed by the receiver
+				$message->set( 'checked',1 );
+				$message->save();
+			}
 		}
 		
 		$data['page_type'] = 'view';

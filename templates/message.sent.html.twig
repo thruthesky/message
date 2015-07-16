@@ -7,7 +7,14 @@
 				<div class='checkbox-wrapper'><input type='checkbox' name='command_checkbox' value='{{ message.id.value }}'/></div>
 			</div>
 			<div class='td sender'>
-				<div class="sender">{{ message.send_id.entity.name.value }}</div>
+			
+				{% if data.page == 'sent' %}
+					{% set name = message.user_id.entity.name.value %}
+				{% else %}
+					{% set name = message.send_id.entity.name.value %}
+				{% endif %}
+			
+				<div class="sender">{{ name }}</div>
 				<div class="title less_640">					
 						{{ message.title.value }}					
 				</div>	
