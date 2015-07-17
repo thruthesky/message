@@ -1,6 +1,6 @@
 section.message .table-list {
 	display:table;
-	width:100%;
+	width:100%;	
 }
 
 section.message .table-list > a{
@@ -9,6 +9,7 @@ section.message .table-list > a{
 
 section.message .table-list > a > div{
 	display:table-cell;
+	vertical-align: middle;
 }
 
 
@@ -48,6 +49,7 @@ section.message .table-list .td > div{
 section.message .table-list .td > div.checkbox-wrapper{
 	padding:10px;
 	box-sizing:border-box;
+	cursor:default;
 }
 
 section.message .table-list .td.checkbox{
@@ -164,5 +166,9 @@ section.message .page-wrapper a.arrow.left{
 	
 	section.message .table-list .td.checkbox .checkbox-wrapper >input{		
 		top:0;
+	}
+	
+	section.message .table-list .td.sender > div{
+		padding:13px 0;
 	}
 }

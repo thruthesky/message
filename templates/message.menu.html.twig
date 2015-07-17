@@ -48,7 +48,7 @@ Need to get what page the user is currently in for the selected class of "li"
 		{% endif %}
 		
 		{% if data.page == 'view' %}
-			<a href = "/message/delete?id={{ data.message.id.value }}" class='delete'><img src='/modules/message/img/trash.png'/></a>
+			<a class='item' href = "/message/delete?id={{ data.message.id.value }}" class='delete'><img src='/modules/message/img/trash.png'/></a>
 		{% else %}
 			<span class="multi-delete">DELETE</span>
 		{% endif %}

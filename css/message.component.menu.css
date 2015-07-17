@@ -4,6 +4,7 @@
 
 .message .menu  a.menu-item{	
 	display: inline-block;
+	height:39px;
 	width:100%;
 	padding: 10px 0;
 	border:1px solid #afafaf;
@@ -116,7 +117,7 @@
 	box-sizing:border-box;
 }
 
-.message .message-commands > span, .message .message-commands > a, .message .message-commands input[type='image']{
+.message .message-commands > span, .message .message-commands > a.item, .message .message-commands input[type='image']{
 	float:left;
 	display:inline-block;
 	height:35px;
