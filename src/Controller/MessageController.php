@@ -140,11 +140,11 @@ class MessageController extends ControllerBase {
             $id = Message::sendForm($data);
             if ( is_numeric($id) ) {
                 $client = new Client();
-                $url = "http://sonub.com/smsgate/send?username=canary&password=canary&number=0912345678&message=You have 5 messages on www.sonub.com";
-                $response = $client->post($url);
+                $url = "http://sonub.org/smsgate/send?username=canary&password=canary&number=0912345678&message=You have 5 messages on www.sonub.com";
+                $response = $client->post($url, [], ['verify'=>false]);
                 $code = $response->getStatusCode();
                 $re = $response->json();
-                if ( $re['error'] ) {
+                if ( isset($re['error']) && $re['error'] ) {
                     $message = Message::load($id);
                     $message->set('result_sms_send', 'F');
                     $message->save();
