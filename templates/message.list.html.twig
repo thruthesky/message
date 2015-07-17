@@ -3,7 +3,6 @@
     <form name="list" action="/message/delete">
         <div class='table-list'>
             {% for message in data.list %}
-
                 <div class='td checkbox'>
                     <div class='checkbox-wrapper'><input type='checkbox' class='ids' name='ids[]' value='{{ message.id.value }}'/></div>
                 </div>
