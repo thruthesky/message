@@ -46,7 +46,16 @@ Need to get what page the user is currently in for the selected class of "li"
 		{% if data.page_type != 'view' %}
 		<span class='checkbox-wrapper'><input type='checkbox'></span>
 		{% endif %}
-		<a href = "#" class='delete'><img src='/modules/message/img/trash.png'/></a>
+		
+		{% if data.page == 'view' %}
+			<a href = "/message/delete?id={{ data.message.id.value }}" class='delete'><img src='/modules/message/img/trash.png'/></a>
+		{% else %}
+			<form action='/message/delete'>
+				<input type='hidden' name='ids' value="">
+				<input type='image' src='/modules/message/img/trash.png' class='delete'>
+			</form>
+		{% endif %}
+		
 		{% if data.page_type == 'view' %}
 			<span class='report'><img src='/modules/message/img/report.png'/>Report</span>
 		{% else %}

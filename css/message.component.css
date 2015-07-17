@@ -1,5 +1,11 @@
 section.error {
+	padding:10px;
     background-color: #DA8028;
     color:white;
 }
 
+section.error .go-back b{
+	padding:0;
+	background-color:transparent;
+	color:#fff;
+}

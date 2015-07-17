@@ -179,13 +179,27 @@ class MessageController extends ControllerBase {
             $data['error'] = "Message does not exist.";
             return false;
         }
-
-        if ( $message->getOwnerId() == self::uid() ) {
-            $data['error'] = "This is not your message. you cannot delete";
+		//getOwnerId here is only the receiver
+        if ( $message->getOwnerId() != self::uid() ) {
+			$page = 'sent';
+			if( $message->send_id->target_id == self::uid() ){
+				if( $message->checked->value == 0 ) $message->delete();
+				else $data['error'] = "You cannot delete sent messages that are already read by the receiver.";	
+			}
+            else $data['error'] = "This is not your message. you cannot delete. [ ID: ".$message->id()." ]";
         }
-
-        $message->delete();
-        return new RedirectResponse('/message/list');
+		else{
+			$page = 'list';
+			$message->delete();
+		}
+		
+		$data['page'] = $page;
+        $data['input'] = self::input();
+		self::collect( $data );
+		
+		return self::theme($data);
+		
+        //return new RedirectResponse('/message/list');
     }
 
 }
