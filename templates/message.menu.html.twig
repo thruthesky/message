@@ -44,16 +44,13 @@ Need to get what page the user is currently in for the selected class of "li"
 	</div>
 	<div class='message-commands clearfix'>
 		{% if data.page_type != 'view' %}
-		<span class='checkbox-wrapper'><input type='checkbox'></span>
+		<span class='checkbox-wrapper'><input type='checkbox' name="toggle"></span>
 		{% endif %}
 		
 		{% if data.page == 'view' %}
 			<a href = "/message/delete?id={{ data.message.id.value }}" class='delete'><img src='/modules/message/img/trash.png'/></a>
 		{% else %}
-			<form action='/message/delete'>
-				<input type='hidden' name='ids' value="">
-				<input type='image' src='/modules/message/img/trash.png' class='delete'>
-			</form>
+			<span class="multi-delete">DELETE</span>
 		{% endif %}
 		
 		{% if data.page_type == 'view' %}

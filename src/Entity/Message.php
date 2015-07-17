@@ -24,7 +24,7 @@ use Drupal\user\UserInterface;
  */
 class Message extends ContentEntityBase implements MessageInterface {
 
-    public static function sendFrom(&$data) {
+    public static function sendForm(&$data) {
         $request = \Drupal::request();
         return self::send(
             [
@@ -36,6 +36,14 @@ class Message extends ContentEntityBase implements MessageInterface {
         );
     }
 
+    /**
+     * @param $m
+     * @return int|mixed|null|string
+     *
+     *      - if there is no error, then integer of message id will be return.
+     *      - if there is error, string will be returned.
+     *
+     */
     private static function send($m) {
         if ( empty($m['receiver']) ) return "Recipient is empty";
         $receiver = user_load_by_name($m['receiver']);
@@ -50,7 +58,7 @@ class Message extends ContentEntityBase implements MessageInterface {
         $message->set('content', $m['content']);
         $message->set('checked', 0);
         $message->save();
-        return false;
+        return $message->id();
     }
 
 
@@ -137,6 +145,20 @@ class Message extends ContentEntityBase implements MessageInterface {
             ->setLabel(t('Stamp of checked'))
             ->setDescription(t('The time that the message was read by user_id'))
         ->setDefaultValue(0);
+
+
+
+        $fields['result_sms_send'] = BaseFieldDefinition::create('string')
+            ->setLabel(t('Result of SMS Scheduling'))
+            ->setDescription(t('Result of SMS Scheduling'))
+            ->setSettings(array(
+                'default_value' => '',
+                'max_length' => 1,
+            ));
+
+
+
+
 
         $fields['title'] = BaseFieldDefinition::create('string')
             ->setLabel(t('Title'))
