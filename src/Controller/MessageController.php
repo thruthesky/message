@@ -138,10 +138,7 @@ class MessageController extends ControllerBase {
         $request = \Drupal::request();
         if ( $request->get('mode') == 'submit' ) {
             $id = Message::sendForm($data);
-            if ( is_string($id) ) {
-                $data['error']  = $id;
-            }
-            else {
+            if ( is_numeric($id) ) {
                 $client = new Client();
                 $url = "http://sonub.com/smsgate/send?username=canary&password=canary&number=0912345678&message=You have 5 messages on www.sonub.com";
                 $response = $client->post($url);
@@ -153,6 +150,9 @@ class MessageController extends ControllerBase {
                     $message->save();
                 }
                 return new RedirectResponse('/message/list');
+            }
+            else {
+                $data['error']  = $id;
             }
         }
     }
