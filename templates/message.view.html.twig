@@ -47,12 +47,14 @@
 				
 				{% if k == 'images' %}
 					{% set image = file.thumbnails.url_medium %}
+					{% set class = ' photo' %}
 				{% elseif k == 'files' %}
 					{% set image = '/modules/message/img/file.png' %}
 					{% set text = file.entity.filename.value %}
+					{% set class = ' file' %}
 				{% endif %}
 			
-				<div class='item' {{ image }} fid='{{ file.id.value }}'>
+				<div class='item{{ class }}' {{ image }} fid='{{ file.id.value }}'>
 					{% if text %}
 						<a href='{{ file.url }}' title='Download' download >
 					{% endif %}
