@@ -1,8 +1,6 @@
 $ = jQuery;
 
 $(function(){
-	$("body").on("click","section.message .table-list .td.checkbox .checkbox-wrapper >input". callback_checkbox_checked );
-
 	$('.message-commands input[name="toggle"]').click(function(){
         $(".ids").each(function(i){
             $(this).prop("checked", !$(this).prop("checked"));
@@ -13,8 +11,15 @@ $(function(){
         if ( re ) $("form[name='list']").submit();
         else return false;
     });
-});
-
-function callback_checkbox_checked(){
 	
-}
+	
+		
+	$("body").on( "click","section.message .table-list .row", function( e ){
+		/*
+		*temp
+		*/
+		var $this = $(this);		
+		if( $(e.target).attr("class") == 'ids' ) e.stopPropagation();
+		if( $(e.target).attr("class") == 'checkbox-wrapper' ) e.preventDefault();
+	} );
+});

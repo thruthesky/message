@@ -3,7 +3,7 @@
     <form name="list" action="/message/delete">
         <div class='table-list'>
             {% for message in data.list %}
-			<a href="/message/view?id={{ message.id.value }}" class="row{{ message.checked.value > 1 ? " checked" }}" valign='center'>
+			<div class="tr row{{ message.checked.value > 1 ? " checked" }}" valign='center'>
                 <div class='td checkbox'>
                     <div class='checkbox-wrapper'><input type='checkbox' class='ids' name='ids[]' value='{{ message.id.value }}'/></div>
                 </div>             
@@ -13,13 +13,13 @@
 						{{ message.title.value }}
 					</div>
 				</div>
-				<div class='td title'>
+				<a  href="/message/view?id={{ message.id.value }}"  class='td title'>
 					<div class="title">{{ message.title.value }}</div>
-				</div>
+				</a>
 				<div class='td date'>
 					<div class="date">{{ html.humanTimingMessageUnique( message.created.value ) }}</div>
 				</div>
-             </a>
+             </div>
             {% endfor %}
         </div>
     </form>
