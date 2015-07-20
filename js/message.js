@@ -37,6 +37,11 @@ $(function(){
 	
 	$('body').on('click', ".send .message-send .message-uploaded-files .item .delete", callback_message_delete_file);
 	
+	$('body').on('click', ".message-uploaded-files .item.photo", callback_show_image);
+	
+	$(window).resize( callback_window_resize );
+	
+	$('body').on('click', ".message-modal-window", callback_remove_modal_window);
 });
 
 function callback_message_send_file_upload(){
@@ -140,3 +145,72 @@ function callback_message_delete_file(){
 		}
 	} );
 }
+
+function callback_show_image(){
+	$("body").append( getMessageModalWindow() );
+	//$("body, html").css("height", $(window).height() );
+	var fid = $(this).attr('fid');
+	var url = "/message/api?call=getImage&fid=" + fid;
+	
+	ajax_api( url, function(re) {
+		if ( re.code == 0 ) {
+			console.log( re );
+			html = "<img src='" + re.url.url_original + "'/>";
+			$(".message-modal-window").append( html );
+			$(".message-modal-window > img").load(function(){
+				$(this).show();
+				modalImageResize();
+			});
+			
+		}
+	} );
+}
+
+function getMessageModalWindow(){
+	html =	"<div class='message-modal-window'>" +
+			"</div>";
+			
+	return html;
+}
+
+function modalImageResize(){
+
+	image_width = $(".message-modal-window > img").width();	
+	image_height = $(".message-modal-window > img").height();	
+	
+	window_width = $(window).width();
+	window_height = $(window).height();
+	
+	if( window_width > image_width && window_height > image_height ){
+		//if( image_height > image_width ) $(".message-modal-window > img").css("");		
+	}
+	else{		
+		if( image_height > window_height ){
+			$(".message-modal-window > img").css("height","100%");
+		}
+		else if( image_width > window_width ){
+			$(".message-modal-window > img").css("width","100%");
+		}
+	}
+	margin_left = ( window_width - $(".message-modal-window > img").width() ) / 2;	
+	if( margin_left > 0 ) $(".message-modal-window > img").css("margin-left", margin_left);
+	else $(".message-modal-window > img").css("margin-left", 0);
+	
+	margin_top = ( window_height - $(".message-modal-window > img").height() ) / 2;
+	if( margin_top > 0 ) $(".message-modal-window > img").css("margin-top", margin_top);
+	else $(".message-modal-window > img").css("margin-top", 0);
+}
+
+function callback_remove_modal_window( e ){
+	if( $( e.target ).hasClass( "message-modal-window" ) ) $(this).remove();
+}
+
+
+
+/*callback_window_resize*/
+function callback_window_resize(){
+	if( $(".message-modal-window").length ){
+		modalImageResize();
+	}
+}
+/*eo callback_window_resize*/

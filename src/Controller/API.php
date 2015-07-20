@@ -119,5 +119,29 @@ class API extends ControllerBase {
             ];
         }
     }
+	
+	/*
+	*returns a file image by fid with thumbnail URLs
+	*/
+	public static function getImage(){
+		$request = \Drupal::request();
+		$fid = $request->get('fid', 0);
+		
+		$file = File::load($fid);
+		if ( $file ) {
+			$url = Message::getFileUrl( $file );
+			
+			return [
+				//'code' => '0',
+				'url'=>$url
+			];
+		}
+		else {
+			return [
+				'code' => '-3',
+				'message'=>"Failed to get file:$fid "
+			];
+		}
+	}
 
 }

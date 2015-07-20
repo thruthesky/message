@@ -22,6 +22,7 @@ section.error .go-back b{
 	width:15.66%;	
 	padding:5px 0 15px 0;
 	margin:0 .5% 5px .5%;
+	cursor:pointer;
 }
 
 .message-uploaded-files .item  img{
@@ -59,3 +60,23 @@ section.error .go-back b{
 	background-color:red;
 }
 /*eo message-uploaded-files*/
+
+
+/*message-modal-window*/
+.message-modal-window{
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0,0,0,.3);	
+}
+
+.message-modal-window > img{
+	display:none;
+	max-width:100%;
+	max-height:100%;
+	/*padding:10px;*/
+	box-sizing:border-box;
+}
+/*eo message-modal-window*/

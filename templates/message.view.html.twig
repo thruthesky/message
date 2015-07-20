@@ -53,8 +53,7 @@
 					{% set text = file.entity.filename.value %}
 					{% set class = ' file' %}
 				{% endif %}
-			
-				<div class='item{{ class }}' {{ image }} fid='{{ file.id.value }}'>
+				<div class='item{{ class }}' fid='{{ file.entity.id }}'>
 					{% if text %}
 						<a href='{{ file.url }}' title='Download' download >
 					{% endif %}
