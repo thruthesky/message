@@ -1,6 +1,8 @@
 <?php
 
 
+define('DIR_MESSAGE_DATA', 'public://message/');
+
 function message_theme()
 {
     return [

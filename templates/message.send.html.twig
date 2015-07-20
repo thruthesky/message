@@ -1,13 +1,22 @@
-<form class='message-send'>
-    <fieldset>
-        {#<legend>Message Send</legend>#}
-        <input type="hidden" name="mode" value="submit">
-        {{ html.input({'type':'text','name':'receiver', 'id':'message-receiver', 'class':'receiver', 'label':'To:', 'placeholder':'Input Recipient', 'value':data.input.receiver}) }}
-        {{ html.input({'type':'text','name':'title', 'id':'message-title', 'class':'title', 'label':'Subject:', 'placeholder':'Input Title'}) }}
-        {{ html.textarea({'name':'content', 'id':'message-content', 'class':'content', 'label':'Content', 'placeholder':'Input Content'}) }}
-		<div class='buttons clearfix'>
-			<span>Add Files</span><span>Add Photos</span>
-			<input type="submit" value='Send'>
-		</div>
-    </fieldset>
-</form>
+<div class='send-wrapper'>
+	<form class='message-send' method="post">
+		<fieldset>
+			{#<legend>Message Send</legend>#}			
+			<input type="hidden" name="mode" value="submit">
+			<input type='hidden' name='fid'>
+			<input type='hidden' name='action'>
+			{{ html.input({'type':'text','name':'receiver', 'id':'message-receiver', 'class':'receiver', 'label':'To:', 'placeholder':'Input Recipient', 'value':data.input.receiver}) }}
+			{{ html.input({'type':'text','name':'title', 'id':'message-title', 'class':'title', 'label':'Subject:', 'placeholder':'Input Title'}) }}
+			{{ html.textarea({'name':'content', 'id':'message-content', 'class':'content', 'label':'Content', 'placeholder':'Input Content'}) }}		
+			<div class='message-uploaded-files clearfix'>
+				
+			</div>
+			<div class='buttons clearfix'>
+				<span>
+					<input type='file' name='files[]' multiple onchange="jQuery(this).parent().parent().parent().submit();">
+				</span>
+				<input type="submit" value='Send'>
+			</div>
+		</fieldset>	
+	</form>
+</div>	

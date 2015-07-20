@@ -4,3 +4,10 @@ message.list:
     _controller: Drupal\message\Controller\MessageController::defaultController
   requirements:
     _permission: 'access content'
+
+message.api:
+  path: '/message/api'
+  defaults:
+    _controller: Drupal\message\Controller\API::defaultController
+  requirements:
+    _permission: 'access content'

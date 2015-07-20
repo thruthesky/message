@@ -9,3 +9,53 @@ section.error .go-back b{
 	background-color:transparent;
 	color:#fff;
 }
+
+/*message-uploaded-files*/
+.message-uploaded-files{	
+	border:1px solid #afafaf;
+	border-top:0;
+}
+
+.message-uploaded-files .item{
+	float:left;
+	position:relative;	
+	width:15.66%;	
+	padding:5px 0 15px 0;
+	margin:0 .5% 5px .5%;
+}
+
+.message-uploaded-files .item  img{
+	width:100%;
+}
+
+.message-uploaded-files .item .file-name{
+	display:block;
+	position:absolute;
+	bottom:0;
+	left:0;
+	width:100%;
+	/*padding:3px 10px;*/
+	box-sizing:border-box;
+	text-align:center;
+}
+
+.message-uploaded-files .item .delete{
+	display:none;
+	position: absolute;
+	right: 5px;
+	top: 10px;
+	padding: 0 5px 4px 5px;
+	border-radius: 2px;
+	background-color: black;
+	color: #fff;
+	cursor: pointer;
+}
+
+.message-uploaded-files .item:hover .delete{
+	display:block;	
+}
+
+.message-uploaded-files .item .delete:hover{
+	background-color:red;
+}
+/*eo message-uploaded-files*/

@@ -14,7 +14,12 @@
 					</div>
 				</div>
 				<a  href="/message/view?id={{ message.id.value }}"  class='td title'>
-					<div class="title">{{ message.title.value }}</div>
+					{% if message.title.value %}
+						{% set label = message.label%}
+					{% else %}
+						{% set label = message.content.value %}
+					{% endif %}
+					<div class="title">{{ label }}</div>
 				</a>
 				<div class='td date'>
 					<div class="date">{{ html.humanTimingMessageUnique( message.created.value ) }}</div>

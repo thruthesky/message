@@ -4,6 +4,7 @@ default:
     js/message.js: {}
   dependencies:
     - core/jquery
+    - core/jquery.form
     - core/underscore
   css:
     theme:

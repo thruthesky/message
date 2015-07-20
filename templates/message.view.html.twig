@@ -25,17 +25,47 @@
 					Subject:
 				</td>
 				<td>
-					<div class='text'>{{ message.label }}</div>
+					{% if message.label %}
+						{% set title = message.label %}
+					{% else %}
+						{% set title = "No Subject" %}
+					{% endif %}
+					<div class='text'>{{ title }}</div>
 				</td>
 			</tr>
 		</table>		
 	</div>
 	<div class="content">
-		{{ message.content.value | e }}
+		{{ message.content.value | e | nl2br }}
 	</div>
-	<div class='files'>
-		FILES HERE
+	{% if data.rendered_files %}
+	<div class='message-uploaded-files clearfix'>
+		{% for k,files in data.rendered_files %}				
+			{% for file in files%}
+				{% set image = "" %}
+				{% set text = "" %}
+				
+				{% if k == 'images' %}
+					{% set image = file.thumbnails.url_medium %}
+				{% elseif k == 'files' %}
+					{% set image = '/modules/message/img/file.png' %}
+					{% set text = file.entity.filename.value %}
+				{% endif %}
+			
+				<div class='item' {{ image }} fid='{{ file.id.value }}'>
+					{% if text %}
+						<a href='{{ file.url }}' title='Download' download >
+					{% endif %}
+						<img src='{{ image }}'/>
+						<span class='file-name'>{{ text }}</span>
+					{% if text %}
+						</a>
+					{% endif %}
+				</div>
+			{% endfor %}
+		{% endfor %}
 	</div>
+	{% endif %}
 </div>
 
 

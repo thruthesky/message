@@ -138,7 +138,13 @@ class MessageController extends ControllerBase {
         $request = \Drupal::request();
         if ( $request->get('mode') == 'submit' ) {
             $id = Message::sendForm($data);
-
+			$fids = $request->get("fid");
+						
+			if( !empty( $fids ) ){
+				//di( $fids );
+				Message::updateUploadedFiles( $id );
+				//exit;
+			}
             if ( is_numeric($id) ) {
 				/*
                 $client = new Client();
@@ -173,6 +179,8 @@ class MessageController extends ControllerBase {
 
         $data['page_type'] = 'view';
         $data['message'] = $message;
+		$data['files'] =  Library::files_by_module_id('message', $message->id() );
+		$data['rendered_files'] = Message::renderViewFiles($data['files']);		
     }
 
     private static function input() {

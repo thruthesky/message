@@ -6,6 +6,7 @@ use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\message\MessageInterface;
 use Drupal\user\UserInterface;
 
+use Drupal\file\Entity\File;
 /**
  * Defines the Message entity.
  *
@@ -24,7 +25,7 @@ use Drupal\user\UserInterface;
  */
 class Message extends ContentEntityBase implements MessageInterface {
 
-    public static function sendForm(&$data) {
+    public static function sendForm(&$data) {		
         $request = \Drupal::request();
         return self::send(
             [
@@ -61,7 +62,63 @@ class Message extends ContentEntityBase implements MessageInterface {
         return $message->id();
     }
 
+	public static function updateUploadedFiles( $message_id ){
+		$request = \Drupal::request();
+		$ids = $request->get('fid');
+		
+		if ( $ids ) {
+			$fids = explode(',', $ids);
+			foreach( $fids as $fid ) {
+				if ( empty($fid) || ! is_numeric($fid) ) continue;
+				$file = File::load($fid);
+				if ( $file ) {
+					$file->set('status', 1)->save();
+					db_update('file_usage')
+						->fields(['id'=>$message_id])
+						->condition('fid', $fid)
+						->execute();
+				}
+			}
+		}
+	}
+	
+	public static function getFileUrl( $file_entity ) {
+		$file_url = [];
+		$file_url['fid'] = $file_entity->id();
+		$file_url['url_original'] = $file_entity->url();
+		$path = $file_entity->getFileUri();
+		$file_url['url_thumbnail'] = entity_load('image_style', 'thumbnail')->buildUrl($path);
+		$file_url['url_medium'] = entity_load('image_style', 'medium')->buildUrl($path);
+		$file_url['url_large'] = entity_load('image_style', 'large')->buildUrl($path);
+		return $file_url;
+	}
+	
+	public static function renderViewFiles($files) {
+        if ( empty($files) ) return false;
+        $ret = [];
+        foreach( $files as $file ) {						
+            if( strpos( $file->filemime->value, "image" ) !== false  ){
+				$rendered_image = [];
+				$rendered_image['entity'] = $file;
+				$rendered_image['thumbnails'] = self::getFileUrl( $file );
+				$ret['images'][] = $rendered_image;
+			}
+			else{
+				$rendered_file = [];
+				$rendered_file['entity'] = $file;
+				$rendered_file['url'] = $file->url();
+				$ret['files'][] = $rendered_file;				
+			}
+        }
 
+        return $ret;
+    }
+	
+	/*
+	public static function files($id) {
+        return Library::files_by_module_id('message', $id);
+    }
+	*/
     /**
      * {@inheritdoc}
      */
