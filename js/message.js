@@ -31,6 +31,10 @@ $(function(){
 		}
 		else{			
 			$this.prop('action', '/message/api?call=fileUpload');
+			
+			$(".send .message-send .buttons > span.file-upload .text").toggle();
+			$(".send .message-send .buttons > span.file-upload .loader").toggle();
+			
 			message_ajax_file_upload( $this, callback_message_ajax_file_upload );
 			return false;
 		}
@@ -46,7 +50,7 @@ $(function(){
 	$('body').on('click', ".message-modal-window", callback_remove_modal_window);
 });
 
-function callback_message_send_file_upload(){
+function callback_message_send_file_upload(){	
 	message_ajax_file_upload( $(this), callback_message_ajax_file_upload);
 }
 
@@ -85,7 +89,7 @@ function message_ajax_file_upload($form, callback_message_function)
             // console.log(re);
             callback_message_function( $form, re );
             setTimeout(function(){
-                $upload_progress.hide();
+                $upload_progress.hide();												
             }, 500);
             $.each($form.find("input[type='file']"), function(i, v){
                 var name = $(this).prop('name');
@@ -121,6 +125,10 @@ function callback_message_ajax_file_upload($form, re)
 }
 
 function callback_message_file_upload_complete( $form, $files ){
+	$(".send .message-send .buttons > span.file-upload .text").toggle();
+	$(".send .message-send .buttons > span.file-upload .loader").toggle();
+
+
 	var $files_html = "";
 	var $images_html = "";
 	for( var i in $files ){

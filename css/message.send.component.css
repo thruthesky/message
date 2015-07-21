@@ -59,9 +59,36 @@
 
 .send .message-send .buttons > span{
 	display:inline-block;
-	padding:7px 10px;
+	/*padding:7px 10px;*/
 	border-right:1px solid #afafaf;
-	color:#5e5e5e;
+	color:#5e5e5e;		
+}
+
+.send .message-send .buttons > span.file-upload{
+	position: relative;
+	height: 21px;
+	padding: 9px 10px 5px 10px;
+}
+
+.send .message-send .buttons > span.file-upload .text img{
+	position:relative;
+	top:1px;
+	margin-right:3px;
+}
+
+.send .message-send .buttons > span.file-upload .loader{
+	display:none;
+}
+
+.send .message-send .buttons > span.file-upload input{
+	position:absolute;
+	left:0;
+	top:0;
+	height:100%;
+	width:100%;
+	opacity:0;
+	z-index:1;
+	/*cursor:pointer;*/
 }
 
 .send .message-send .buttons > input[type='submit']{
