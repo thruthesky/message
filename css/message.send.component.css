@@ -70,6 +70,7 @@
 	width:93px;
 	padding: 9px 10px 5px 10px;
 	box-sizing:border-box;
+	overflow:hidden;
 }
 
 .send .message-send .buttons > span.file-upload .text img{
