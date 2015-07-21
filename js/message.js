@@ -78,7 +78,7 @@ function message_ajax_file_upload($form, callback_message_function)
             $upload_progress.find('.caption').html('Upload: ' + percentVal);
         },
         complete: function(xhr) {
-            console.log("Upload completed!!");
+            //console.log("Upload completed!!");
             var re;
             try {
                 re = JSON.parse(xhr.responseText);
@@ -103,7 +103,7 @@ function message_ajax_file_upload($form, callback_message_function)
 
 function callback_message_ajax_file_upload($form, re)
 {
-    console.log("callback_ajax_file_upload() begin");
+    //console.log("callback_ajax_file_upload() begin");
     var data;
     try {
         data = JSON.parse(re);
@@ -112,7 +112,7 @@ function callback_message_ajax_file_upload($form, re)
         alert(re);
         return;
     }
-    console.log(data['files']);
+    //console.log(data['files']);
     var i;
     for( i in data['files'] ) {
         var file = data['files'][i];
@@ -132,7 +132,7 @@ function callback_message_file_upload_complete( $form, $files ){
 	var $files_html = "";
 	var $images_html = "";
 	for( var i in $files ){
-		console.log( $files[i]['type'].indexOf("image") );
+		//console.log( $files[i]['type'].indexOf("image") );
 		if( $files[i]['type'].indexOf("image") == -1 ){
 			$files_html += "<div class='item file' fid='" + $files[i]['fid'] + "'><span class='delete'>x</span><img src='/modules/message/img/file.png'/><span class='file-name'>" + $files[i]['name'] + "</span></div>";
 		}
@@ -147,7 +147,7 @@ function callback_message_file_upload_complete( $form, $files ){
 
 function callback_message_delete_file(){
 	var fid = $(this).parent().attr('fid');
-	console.log('fid:'+fid);
+	//console.log('fid:'+fid);
 	var url = "/message/api?call=fileDelete&fid=" + fid;
 	ajax_api( url, function(re) {
 		if ( re.code == 0 ) {
@@ -156,7 +156,9 @@ function callback_message_delete_file(){
 	} );
 }
 
-function callback_show_image(){
+function callback_show_image( e ){
+	if( $( e.target ).attr("class") == 'delete' ) return;
+	
 	$("body").append( getMessageModalWindow() );
 	//$("body, html").css("height", $(window).height() );
 	var fid = $(this).attr('fid');
@@ -164,7 +166,7 @@ function callback_show_image(){
 	
 	ajax_api( url, function(re) {
 		if ( re.code == 0 ) {
-			console.log( re );
+			//console.log( re );
 			html = "<img src='" + re.url.url_original + "'/>";
 			$(".message-modal-window").append( html );
 			$(".message-modal-window > img").load(function(){
