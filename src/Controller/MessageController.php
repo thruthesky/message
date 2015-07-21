@@ -17,7 +17,7 @@ class MessageController extends ControllerBase {
         ];
     }
 
-    public static function defaultController($page) {
+    public static function defaultController($page) {		
         $data = ['page'=>$page];
         $data['input'] = self::input();
         if ( ! self::checkLogin($data) ) return self::theme($data);
@@ -35,10 +35,17 @@ class MessageController extends ControllerBase {
             return false;
         }
     }
-    private static function uid() {
+	//changed into public by benjamin ( used it in message.module )
+    public static function uid() {
         return \Drupal::currentUser()->getAccount()->id();
     }
     private static function collect(&$data) {
+		//di( user_load_by_name("admian") );
+	
+		$uri = \Drupal::request()->getRequestUri();
+		$search_mode = false;
+		if( strpos( $uri, '/message/search' ) !== false ) $search_mode = true;
+		
         $input = self::input();
         //just used for total...
         $result = db_select('we_message')->fields(null, ['id']);
@@ -48,6 +55,25 @@ class MessageController extends ControllerBase {
             $result = $result->condition( 'checked' , 0 );
         }
         else if( $data['page'] == 'sent' ) $result = $result->condition( 'send_id' , self::uid() );
+		
+		/*search*/
+		if( $search_mode == true ){
+			//$db->condition('url_from', '%'.$keyword_from.'%', 'LIKE');
+			$ors = db_or();
+			$ors->condition('title', '%'.$input['keyword'].'%', 'LIKE');
+			$ors->condition('content', '%'.$input['keyword'].'%', 'LIKE');
+			
+			
+			$member = user_load_by_name( $input['keyword'] );
+			if( !empty( $member ) ){
+				$ors->condition('send_id', '%'.$member->id().'%', 'LIKE');
+				$ors->condition('user_id', '%'.$member->id().'%', 'LIKE');
+			}
+			
+			$result = $result->condition( $ors );
+		}
+		/*eo search*/
+		
         $result = $result->orderBy('id', 'DESC')->execute();
 
         $total_ids = [];
@@ -84,6 +110,23 @@ class MessageController extends ControllerBase {
             $result_paged = $result_paged->condition( 'checked' , 0 );
         }
         else if( $data['page'] == 'sent' ) $result_paged = $result_paged->condition( 'send_id' , self::uid() );
+		
+		/*search*/
+		if( $search_mode == true ){
+			//$db->condition('url_from', '%'.$keyword_from.'%', 'LIKE');
+			$ors = db_or();
+			$ors->condition('title', '%'.$input['keyword'].'%', 'LIKE');
+			$ors->condition('content', '%'.$input['keyword'].'%', 'LIKE');
+			
+			if( !empty( $member ) ){//send id only
+				$ors->condition('send_id', '%'.$member->id().'%', 'LIKE');
+				$ors->condition('user_id', '%'.$member->id().'%', 'LIKE');
+			}
+			
+			$result_paged = $result_paged->condition( $ors );						
+		}
+		/*eo search*/
+		
         $result_paged = $result_paged->orderBy('id', 'DESC')->range( $from , $per_page)->execute();
 
         $ids = [];

@@ -5,6 +5,13 @@ message.list:
   requirements:
     _permission: 'access content'
 
+message.search:
+  path: '/message/search/{page}'
+  defaults:
+    _controller: Drupal\message\Controller\MessageController::defaultController
+  requirements:
+    _permission: 'access content'
+
 message.api:
   path: '/message/api'
   defaults:

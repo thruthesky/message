@@ -19,17 +19,19 @@ $(function(){
         $form_message.submit();
     });
 	
-    $('body').on('click', ".message-send [type='file']", function(){
-        post_edit_form_submit = false;
+    $('body').on('click', ".message-send input[type='file']", function(){
+        post_edit_form_submit = false;		
     });
 	
 	 $form_message.submit(function(){
+		var $this = $(this);
+		
 		if ( post_edit_form_submit ) {
-			$form_message.prop('action', '');
+			$this.prop('action', '');
 		}
-		else{
-			$form_message.prop('action', '/message/api?call=fileUpload');
-			message_ajax_file_upload( $(this), callback_message_ajax_file_upload );
+		else{			
+			$this.prop('action', '/message/api?call=fileUpload');
+			message_ajax_file_upload( $this, callback_message_ajax_file_upload );
 			return false;
 		}
 	 });

@@ -33,12 +33,12 @@ Need to get what page the user is currently in for the selected class of "li"
 	</div>	
 	<div class='message-search'>
 		{# action should be list or sent depending on page. to do later#}
-		<form  action='/message/list'>
+		<form  action='/message/search/{{ data.page }}'>
 			<div class='buttons'>
 				<input type='submit' value='Search'><span class='clear'>Clear</span>
 			</div>
 			<div class='text-wrapper'>				
-				<input type='text' name='keyword' placeholder="Search Message...">
+				<input type='text' name='keyword' placeholder="Search Message..." value={{ input.keyword }}>
 			</div>			
 		</form>
 	</div>

@@ -115,6 +115,23 @@ class Message extends ContentEntityBase implements MessageInterface {
     }
 	
 	/*
+	*returns the total unread messages of a logged_in user
+	*/
+	public static function getUnreadMessages( $id ){
+		$result = db_select('we_message')->fields(null, ['id'])
+					->condition( 'user_id' , $id )
+					->condition( 'checked' , 0 )
+					->execute();
+		$total_ids = [];
+        while ( $row = $result->fetchAssoc(\PDO::FETCH_ASSOC) ) {
+            $total_ids[] = $row['id'];
+        }
+		
+		return count( $total_ids );
+	}
+	
+	
+	/*
 	public static function files($id) {
         return Library::files_by_module_id('message', $id);
     }
