@@ -66,8 +66,10 @@
 
 .send .message-send .buttons > span.file-upload{
 	position: relative;
-	height: 21px;
+	height: 35px;
+	width:93px;
 	padding: 9px 10px 5px 10px;
+	box-sizing:border-box;
 }
 
 .send .message-send .buttons > span.file-upload .text img{
@@ -102,4 +104,43 @@
 	font-size: 1.3em;
 	font-weight: bold;	
 	color: #fff;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.ajax-file-upload-progress-bar {
+	display:none;
+	position: absolute;
+	top: 4px;
+	left: 5px;
+	width: 83px;
+	height: 27px;
+	padding: 5px 0;
+	font-size: .9em;
+	z-index: 1;
+	overflow: hidden;
+	box-sizing: border-box;
+}
+.ajax-file-upload-progress-bar .bar {
+	border: 1px;
+	border-radius: 2px;
+	background-color:#f0f0ff;
+}
+.ajax-file-upload-progress-bar .percent {
+	display: inline-block;
+	padding: 2px 0;
+	background-color: lightgreen;
+	text-align: center;	
 }

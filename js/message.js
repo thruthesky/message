@@ -34,6 +34,7 @@ $(function(){
 			
 			$(".send .message-send .buttons > span.file-upload .text").toggle();
 			$(".send .message-send .buttons > span.file-upload .loader").toggle();
+			$(".send .message-send .buttons > span.file-upload input[type='file']").toggle();
 			
 			message_ajax_file_upload( $this, callback_message_ajax_file_upload );
 			return false;
@@ -127,6 +128,7 @@ function callback_message_ajax_file_upload($form, re)
 function callback_message_file_upload_complete( $form, $files ){
 	$(".send .message-send .buttons > span.file-upload .text").toggle();
 	$(".send .message-send .buttons > span.file-upload .loader").toggle();
+	$(".send .message-send .buttons > span.file-upload input[type='file']").toggle();
 
 
 	var $files_html = "";

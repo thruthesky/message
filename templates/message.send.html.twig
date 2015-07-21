@@ -13,7 +13,11 @@
 			</div>
 			<div class='buttons clearfix'>
 				<span class='file-upload'>
-					<img class='loader' src='/modules/message/img/loader3.gif'/>
+					<span class='ajax-file-upload-progress-bar'>
+						<span class='bar'></span>
+						<span class='percent caption'></span>
+					</span>
+					{#<img class='loader' src='/modules/message/img/loader3.gif'/>#}
 					<input type='file' name='files[]' multiple onchange="jQuery(this).parent().parent().parent().submit();">
 					<span class='text'><img src='/modules/message/img/attach.png'/>Add Files</span>
 				</span>
