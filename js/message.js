@@ -49,6 +49,8 @@ $(function(){
 	$(window).resize( callback_window_resize );
 	
 	$('body').on('click', ".message-modal-window", callback_remove_modal_window);
+
+
 });
 
 function callback_message_send_file_upload(){	
