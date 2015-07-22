@@ -54,7 +54,7 @@
             {% set next_page_url = '#' %}
         {% endif %}
 
-        <span>{{ start }} - {{ end }}</span> of <span>{{ data.total_messages }}</span><a href='{{ prev_page_url }}' class='arrow left'><</a><a href='{{ next_page_url }}' class='arrow right'>></a>
+        <span>{{ start }} - {{ end }}</span> of <span>{{ data.total_messages }}</span><a href='{{ prev_page_url }}' class='arrow left'><img src='/{{ dir_message }}/img/arrow_left.png'/></a><a href='{{ next_page_url }}' class='arrow right'><img src='/{{ dir_message }}/img/arrow_right.png'/></a>
     </div>
 {% else %}
     <h2>No messages found</h2>

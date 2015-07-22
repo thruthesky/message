@@ -128,12 +128,10 @@ section.message .page-wrapper span{
 }
 
 section.message .page-wrapper a.arrow{
+	position: relative;
+	top: 3px;
 	display:inline-block;
-	padding:3px 5px;
 	margin-left:2px;
-	border-radius:3px;
-	background-color:#2ecc71;
-	color:#fff;
 	line-height:100%;
 }
 
