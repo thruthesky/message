@@ -261,7 +261,7 @@ class MessageController extends ControllerBase {
             }
             //getOwnerId here is only the receiver
             if ( $message->getOwnerId() != self::uid() ) {
-                $page = 'sent';
+                //$page = 'sent';
                 if( $message->send_id->target_id == self::uid() ){
                     if( $message->checked->value == 0 ) $message->delete();
                     else $data['error'] = "You cannot delete sent messages that are already read by the receiver.";
@@ -269,16 +269,50 @@ class MessageController extends ControllerBase {
                 else $data['error'] = "This is not your message. you cannot delete. [ ID: ".$message->id()." ]";
             }
             else {
-                $page = 'list';
+                //$page = 'list';
                 $message->delete();
             }
-        }
-        $data['page'] = $page;
+        }        
         $data['input'] = self::input();
+		$data['page'] = $data['input']['page'];
         self::collect( $data );
         return self::theme($data);
 
         //return new RedirectResponse('/message/list');
     }
+	
+	private static function read(&$data) {
+        $request = \Drupal::request();
 
+        $ids = $request->get('ids');
+        if ( empty($id) && empty($ids) ) {
+            $data['error'] = "Wrong input. ID(s) is not provided.";
+            return false;
+        }
+
+        foreach( $ids as $id ) {
+            $message = Message::load( $id );
+            if ( empty($message) ) {
+                $data['error'] = "Message does not exist.";
+                return false;
+            }
+            //getOwnerId here is only the receiver
+            if ( $message->getOwnerId() != self::uid() ) {
+               $data['error'] = "You cannot mark sent messages as read.";
+            }
+            else {
+                //$page = 'list';
+                $message->set( "checked",time() );
+				$message->save();
+            }
+        }
+		
+        //$data['page'] = $page;
+        $data['input'] = self::input();
+		$data['page'] = $data['input']['page'];
+        self::collect( $data );
+        return self::theme($data);
+
+        //return new RedirectResponse('/message/list');
+    }
 }

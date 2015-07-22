@@ -52,7 +52,7 @@ section.message .view .message .title .text{
 section.message .view .message .content{
 	padding:10px 0 15px 0;
 	margin:0 10px;	
-	border-bottom:1px solid #afafaf;
+	/*border-bottom:1px solid #afafaf;*/
 }
 
 section.message .view .message .files{	
@@ -86,7 +86,8 @@ section.message .view .reply.bottom{
 
 /*.view .message-uploaded-files*/
 .view .message-uploaded-files{	
-	border:0;	
-	padding:0 10px;	
+	border-top:1px solid #afafaf;	
+	padding:5px 0 0 0;
+	margin:0 10px;
 }
 /*eo .view .message-uploaded-files*/

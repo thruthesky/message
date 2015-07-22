@@ -1,6 +1,3 @@
-{#
-Need to get what page the user is currently in for the selected class of "li"
-#}
 {% if data.page == 'view' %}
 	{% set self_id =  data.member.id %}
 	{% set send_id =  data.message.send_id.target_id %}
@@ -29,7 +26,10 @@ Need to get what page the user is currently in for the selected class of "li"
 				</td>
 			</tr>
 		</table>
-		<a href='/message/send' class='new-message'>New message</a>
+		
+		{% if data.page != 'send' %}
+			<a href='/message/send' class='new-message'>New message</a>
+		{% endif %}
 	</div>	
 	<div class='message-search'>
 		{# action should be list or sent depending on page. to do later#}
@@ -50,13 +50,13 @@ Need to get what page the user is currently in for the selected class of "li"
 		{% if data.page == 'view' %}
 			<a class='item' href = "/message/delete?id={{ data.message.id.value }}" class='delete'><img src='/modules/message/img/trash.png'/></a>
 		{% else %}
-			<span class="multi-delete">DELETE</span>
+			<span class="multi-delete"><img src='/modules/message/img/trash.png'/></span>
 		{% endif %}
 		
 		{% if data.page_type == 'view' %}
 			<span class='report'><img src='/modules/message/img/report.png'/>Report</span>
 		{% else %}
-			<span>Mark as Read</span>
+			<span class='mark-as-read' title='This function is not yet working'>Mark as Read</span>
 		{% endif %}
 		<a href='/message/send' class='new-message'>New message</a>
 	</div>

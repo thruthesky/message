@@ -1,16 +1,19 @@
 {% import dir_macro ~ '/functions.html.twig' as html %}
 {% if data.list %}
-    <form name="list" action="/message/delete">
+    <form name="list" action="">
+		{% include dir_message ~ '/templates/message.hidden.inputs.html.twig' %}
         <div class='table-list'>
             {% for message in data.list %}
 			<div class="tr row{{ message.checked.value > 1 ? " checked" }}" valign='center'>
                 <div class='td checkbox'>
                     <div class='checkbox-wrapper'><input type='checkbox' class='ids' name='ids[]' value='{{ message.id.value }}'/></div>
                 </div>             
-				<div class='td sender'>
-					<div class="sender">{{ message.send_id.entity.name.value }}</div>
+				<div class='td sender'>					
+					<a href='/member/view/{{ message.send_id.entity.name.value }}' class="author member-profile" uid="{{ message.send_id.target_id }}" target_id="{{ message.id.value }}">{{ message.send_id.entity.name.value }}</a>
 					<div class="title less_640">
-						{{ message.title.value }}
+						<a  href="/message/view?id={{ message.id.value }}">
+							{{ message.title.value }}
+						</a>
 					</div>
 				</div>
 				<a  href="/message/view?id={{ message.id.value }}"  class='td title'>
@@ -51,7 +54,7 @@
             {% set next_page_url = '#' %}
         {% endif %}
 
-        <span>{{ start }} - {{ end }}</span> of <span>{{ data.total_messages }}</span><a href='{{ prev_page_url }}' class='arrow left'><</a><a href='{{ next_page_url }}' class='arrow right'>></a>
+        <span>{{ start }} - {{ end }}</span> of <span>{{ data.total_messages }}</span><a href='{{ prev_page_url }}' class='arrow left'><img src='/{{ dir_message }}/img/arrow_left.png'/></a><a href='{{ next_page_url }}' class='arrow right'><img src='/{{ dir_message }}/img/arrow_right.png'/></a>
     </div>
 {% else %}
     <h2>No messages found</h2>

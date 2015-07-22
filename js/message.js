@@ -6,9 +6,22 @@ $(function(){
             $(this).prop("checked", !$(this).prop("checked"));
         });
     });
+	
     $('.multi-delete').click(function(){
         var re = confirm('Are you sure you want to delete selected messages?');
-        if ( re ) $("form[name='list']").submit();
+        if ( re ) {
+			$("form[name='list']").prop("action","/message/delete");
+			$("form[name='list']").submit();
+		}
+        else return false;
+    });
+	
+    $('.mark-as-read').click(function(){
+        var re = confirm('Are you sure you want to mark all selected messages as read?');
+        if ( re ) {
+			$("form[name='list']").prop("action","/message/read");
+			$("form[name='list']").submit();
+		}
         else return false;
     });
 	
@@ -45,12 +58,9 @@ $(function(){
 	$('body').on('click', ".send .message-send .message-uploaded-files .item .delete", callback_message_delete_file);
 	
 	$('body').on('click', ".message-uploaded-files .item.photo", callback_show_image);
-	
-	$(window).resize( callback_window_resize );
-	
 	$('body').on('click', ".message-modal-window", callback_remove_modal_window);
-
-
+	
+	$(window).resize( callback_window_resize );	
 });
 
 function callback_message_send_file_upload(){	
@@ -161,7 +171,28 @@ function callback_message_delete_file(){
 }
 
 function callback_show_image( e ){
+	console.log( $('body').scrollTop() );
 	if( $( e.target ).attr("class") == 'delete' ) return;
+
+	// lock scroll position, but retain settings for later
+      var scrollPosition = [
+        self.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft,
+        self.pageYOffset || document.documentElement.scrollTop  || document.body.scrollTop
+      ];
+      var html = jQuery('html'); // it would make more sense to apply this to body, but IE7 won't have that
+      html.data('scroll-position', scrollPosition);
+      html.data('previous-overflow', html.css('overflow'));
+      html.css('overflow', 'hidden');
+      window.scrollTo(scrollPosition[0], scrollPosition[1]);
+
+
+      // un-lock scroll position
+      var html = jQuery('html');
+      var scrollPosition = html.data('scroll-position');
+      html.css('overflow', html.data('previous-overflow'));
+      window.scrollTo(scrollPosition[0], scrollPosition[1])
+	
+	
 	
 	$("body").append( getMessageModalWindow() );
 	//$("body, html").css("height", $(window).height() );

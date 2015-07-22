@@ -17,12 +17,12 @@ function message_theme()
 
 function message_preprocess( &$variables, $hook )
 {
-	/*
+	
 	$user_id = MessageController::uid();
 	if( $user_id  && $hook == 'page' ){
 		$variables['data']['user_unread_messages'] = Message::getUnreadMessages( $user_id  );
 	}
-	*/
+	
     $variables['dir_message'] = 'modules/message';
 
     if ( isMessagePage() ) {
