@@ -6,9 +6,22 @@ $(function(){
             $(this).prop("checked", !$(this).prop("checked"));
         });
     });
+	
     $('.multi-delete').click(function(){
         var re = confirm('Are you sure you want to delete selected messages?');
-        if ( re ) $("form[name='list']").submit();
+        if ( re ) {
+			$("form[name='list']").prop("action","/message/delete");
+			$("form[name='list']").submit();
+		}
+        else return false;
+    });
+	
+    $('.mark-as-read').click(function(){
+        var re = confirm('Are you sure you want to mark all selected messages as read?');
+        if ( re ) {
+			$("form[name='list']").prop("action","/message/read");
+			$("form[name='list']").submit();
+		}
         else return false;
     });
 	

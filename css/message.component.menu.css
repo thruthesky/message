@@ -136,6 +136,10 @@
 	top:2px;
 }
 
+.message .message-commands > span{
+	cursor:pointer;
+}
+
 /*eo message-commands*/
 
 /*view page specific*/
