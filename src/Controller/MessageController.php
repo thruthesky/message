@@ -196,7 +196,7 @@ class MessageController extends ControllerBase {
                 $number = isset($member->extra['mobile']) ? $member->extra['mobile'] : null;
                 if ( $number ) {
                     $url = "http://dev.withcenter.com/smsgate/send?username=withcenter&password=Wc0453224133&number=$number&message=You have message on www.sonub.com";
-                    $response = $client->post($url, [], ['verify'=>false]);
+                    $response = $client->post($url, ['verify'=>false]);
                     $code = $response->getStatusCode();
                     $re = $response->json();
                     if ( isset($re['error']) && $re['error'] ) {
