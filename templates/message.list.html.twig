@@ -10,7 +10,9 @@
 				<div class='td sender'>					
 					<a href='/member/view/{{ message.send_id.entity.name.value }}' class="author member-profile" uid="{{ message.send_id.target_id }}" target_id="{{ message.id.value }}">{{ message.send_id.entity.name.value }}</a>
 					<div class="title less_640">
-						{{ message.title.value }}
+						<a  href="/message/view?id={{ message.id.value }}">
+							{{ message.title.value }}
+						</a>
 					</div>
 				</div>
 				<a  href="/message/view?id={{ message.id.value }}"  class='td title'>

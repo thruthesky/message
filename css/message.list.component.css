@@ -62,22 +62,26 @@ section.message .table-list .td.checkbox .checkbox-wrapper{
 
 section.message .table-list .td.checkbox .checkbox-wrapper >input{
 	position:relative;
-	top:5px;
+	top:0;
 }
 
 section.message .table-list .td.sender{
+	height:50px;
 	width:80%;
+	padding:0 0 0 5px;
 	text-align:left;
 }
 
 section.message .table-list .td.sender > div{
 	position:relative;	
 	height:15px;
-	padding:0 5px;	
+	padding:0;	
 }
 
-section.message .table-list .td.sender > div.sender{
-	top:-5px;
+section.message .table-list .td.sender > .author{
+	display:inline-block;	
+	margin-bottom:5px;
+	font-weight:bold;
 	white-space:nowrap;
 }
 
@@ -160,6 +164,11 @@ section.message .page-wrapper a.arrow.left{
 		color:#000;
 	}
 	
+	section.message .table-list .td.sender > .author{
+		font-weight:normal;
+	}
+	
+	/*
 	section.message .table-list .td.sender > div.sender, section.message .table-list .td.sender > div.title{
 		top:0;
 	}
@@ -167,7 +176,7 @@ section.message .page-wrapper a.arrow.left{
 	section.message .table-list .td.checkbox .checkbox-wrapper >input{		
 		top:0;
 	}
-	
+	*/
 	section.message .table-list .td.sender > div{
 		padding:13px 0;
 	}

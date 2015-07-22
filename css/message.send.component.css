@@ -1,5 +1,6 @@
 .send .message-send {
 	margin-top:5px;
+	border:1px solid #afafaf;
 }
 
 .send .message-send fieldset{
@@ -9,12 +10,11 @@
 }
 
 .send .message-send .row.data-set{
-	border:1px solid #afafaf;
-	border-top:0;
+	border-bottom:1px solid #afafaf;
 }
 
-.send .message-send .row.data-set.receiver{
-	border-top:1px solid #afafaf;
+.send .message-send .row.data-set.content{
+	border-bottom:0;
 }
 
 .send .message-send .row.data-set label{
@@ -52,8 +52,7 @@
 }
 
 .send .message-send .buttons{
-	border:1px solid #afafaf;
-	border-top:0;
+	height:35px;
 	background-color:#edf0f5;
 }
 
@@ -145,3 +144,15 @@
 	background-color: lightgreen;
 	text-align: center;	
 }
+
+
+
+
+
+
+/*.view .message-uploaded-files*/
+.send .message-uploaded-files{	
+	border-bottom:1px solid #afafaf;	
+	padding:5px 0 0 0;
+}
+/*eo .view .message-uploaded-files*/

@@ -12,8 +12,8 @@ section.error .go-back b{
 
 /*message-uploaded-files*/
 .message-uploaded-files{	
-	border:1px solid #afafaf;
-	border-top:0;
+	/*border:1px solid #afafaf;
+	border-top:0;*/	
 }
 
 .message-uploaded-files .item{
