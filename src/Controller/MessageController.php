@@ -3,6 +3,7 @@ namespace Drupal\message\Controller;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Http\Client;
 use Drupal\library\Library;
+use Drupal\library\Member;
 use Drupal\message\Entity\Message;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
@@ -189,18 +190,21 @@ class MessageController extends ControllerBase {
 				//exit;
 			}
             if ( is_numeric($id) ) {
-				/*
                 $client = new Client();
-                $url = "http://sonub.org/smsgate/send?username=canary&password=canary&number=0912345678&message=You have 5 messages on www.sonub.com";
-                $response = $client->post($url, [], ['verify'=>false]);
-                $code = $response->getStatusCode();
-                $re = $response->json();
-                if ( isset($re['error']) && $re['error'] ) {
-                    $message = Message::load($id);
-                    $message->set('result_sms_send', 'F');
-                    $message->save();
+                $receiver = user_load_by_name( $request->get('receiver') );
+                $member = Member::load($receiver->id());
+                $number = isset($member->extra['mobile']) ? $member->extra['mobile'] : null;
+                if ( $number ) {
+                    $url = "http://dev.withcenter.com/smsgate/send?username=withcenter&password=Wc0453224133&number=$number&message=You have message on www.sonub.com";
+                    $response = $client->post($url, [], ['verify'=>false]);
+                    $code = $response->getStatusCode();
+                    $re = $response->json();
+                    if ( isset($re['error']) && $re['error'] ) {
+                        $message = Message::load($id);
+                        $message->set('result_sms_send', 'F');
+                        $message->save();
+                    }
                 }
-				*/
                 return new RedirectResponse('/message/list');
             }
             else {

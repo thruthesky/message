@@ -7,8 +7,8 @@
                 <div class='td checkbox'>
                     <div class='checkbox-wrapper'><input type='checkbox' class='ids' name='ids[]' value='{{ message.id.value }}'/></div>
                 </div>             
-				<div class='td sender'>
-					<div class="sender">{{ message.send_id.entity.name.value }}</div>
+				<div class='td sender'>					
+					<a href='/member/view/{{ message.send_id.entity.name.value }}' class="author member-profile" uid="{{ message.send_id.target_id }}" target_id="{{ message.id.value }}">{{ message.send_id.entity.name.value }}</a>
 					<div class="title less_640">
 						{{ message.title.value }}
 					</div>

@@ -33,7 +33,7 @@
 .send .message-send .row.data-set .text input{
 	height:34px;
 	width:100%;
-	padding:10px;
+	padding: 5px 10px;
 	border:0;
 	box-sizing:border-box;
 }
