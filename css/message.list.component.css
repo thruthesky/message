@@ -26,6 +26,7 @@ section.message .table-list{
 section.message .table-list .row{	
 	/*padding:10px;*/
 	background-color:#e7eff3;	
+	font-weight:bold;
 }
 
 section.message .table-list .row .td{
@@ -39,6 +40,15 @@ section.message .table-list .row:last-child .td{
 
 section.message .table-list .row.checked{
 	background-color:#f5f5f5;
+	font-weight:normal;
+}
+
+section.message .table-list .row.checked .td.sender > .author{
+	font-weight:normal;
+}
+
+section.message .table-list .row .td.sender > .author{
+	font-weight:bold;
 }
 
 section.message .table-list .td > div{
