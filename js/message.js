@@ -1,5 +1,5 @@
 $ = jQuery;
-var post_edit_form_submit = true;
+var message_edit_form_submit = true;
 $(function(){
 	$('.message-commands input[name="toggle"]').click(function(){
         $(".ids").each(function(i){
@@ -28,18 +28,18 @@ $(function(){
 	$form_message = $("form.message-send");
 	
 	$(".message-send input[type='submit']").click(function(){
-        post_edit_form_submit = true;
+        message_edit_form_submit = true;
         $form_message.submit();
     });
 	
     $('body').on('click', ".message-send input[type='file']", function(){
-        post_edit_form_submit = false;		
+        message_edit_form_submit = false;		
     });
 	
 	 $form_message.submit(function(){
 		var $this = $(this);
 		
-		if ( post_edit_form_submit ) {
+		if ( message_edit_form_submit ) {
 			$this.prop('action', '');
 		}
 		else{			
@@ -53,7 +53,6 @@ $(function(){
 			return false;
 		}
 	 });
-	//$("body").on("change", ".send-upload-files, callback_message_send_file_upload );
 	
 	$('body').on('click', ".send .message-send .message-uploaded-files .item .delete", callback_message_delete_file);
 	
@@ -62,10 +61,6 @@ $(function(){
 	
 	$(window).resize( callback_window_resize );	
 });
-
-function callback_message_send_file_upload(){	
-	message_ajax_file_upload( $(this), callback_message_ajax_file_upload);
-}
 
 function message_ajax_file_upload($form, callback_message_function)
 {	

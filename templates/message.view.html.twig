@@ -1,18 +1,26 @@
 {% set message = data.message %}
 {% set self_id =  data.member.id %}
-{% set user_id =  data.message.send_id.target_id %}
-{% if self_id == send_id %}
-	{% set name = "You" %}
-{%else %}
-	{% set name = message.send_id.entity.name.value %}
-{% endif %}
+{% set send_id =  data.message.send_id.target_id %}
+
+{% set sender = data.sender %}
+
+
+{% set name = message.send_id.entity.name.value ~ " <span>to "  ~ data.message.user_id.entity.name.value ~ "</span>" %}
+
 <div class='user-info'>
-	<div class='photo'><img src='/modules/message/img/no_primary_photo.png'/></div>
+	<div class='photo'>
+		{% if sender.photo %}
+			{% set url = sender.photo.thumbnails.url_thumbnail %}
+		{% else %}
+			{% set url = '/modules/message/img/no_primary_photo.png' %}
+		{% endif %}
+		<img src='{{ url }}'/>
+	</div>
 	<div class='info'>
 		<a class='reply top' href="/message/send?receiver={{ message.send_id.entity.name.value }}">
 			<img src='/modules/message/img/reply.png'/>Reply 
 		</a>
-		<div class='name'>{{ name }}</div>
+		<div class='name'>{{ name | raw }}</div>
 		<div class='date'>{{ message.created.value|date("F d,Y | h:i A") }}</div>
 		<div class='location'>Lives in the Philippines</div>		
 	</div>

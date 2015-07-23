@@ -30,6 +30,11 @@ section.message .view .user-info .info .name{
 	font-weight:bold;
 }
 
+section.message .view .user-info .info .name > span{
+	font-size:.8em;
+	font-weight:normal;
+}
+
 section.message .view .message{
 	border:1px solid #afafaf;
 }

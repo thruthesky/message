@@ -100,8 +100,25 @@ section.message .table-list .td.title{
 }
 
 section.message .table-list .td.title > div{
+	position:relative;
+	display: inline-block;  
 	padding:0;
+	max-width: 90%;
 	height:16px;
+	overflow:visible;
+}
+
+section.message .table-list .td.title > div > .text{
+	height:16px;
+	overflow:hidden;
+}
+
+section.message .table-list .td.title > div img{
+	display:none;
+	position:absolute;
+	left:100%;
+	top:0;
+	padding:2px 5px;
 }
 
 section.message .table-list .td.date{
@@ -113,6 +130,7 @@ section.message .table-list div.date, section.message .table-list div.name{
 }
 
 section.message .table-list div.date{
+	padding:0 0 5px 0;
 	height:15px;
 	color:#0e6cbb;
 }
@@ -177,5 +195,17 @@ section.message .page-wrapper a.arrow.left{
 	*/
 	section.message .table-list .td.sender > div{
 		padding:13px 0;
+	}
+	
+	section.message .table-list .td.title > div img{
+		display:block;
+	}
+	
+	section.message .table-list div.date{
+		padding:5px;
+	}
+	
+	section.message .table-list div.date img{
+		display:none;
 	}
 }

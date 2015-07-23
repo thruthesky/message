@@ -140,7 +140,14 @@ class MessageController extends ControllerBase {
         $data['page_num'] = $page_num;
         $data['per_page'] = $per_page;
 
-        $data['list'] = Message::loadMultiple($ids);
+        $list = Message::loadMultiple($ids);
+		$messages = [];
+		foreach( $list as $k=>$v ){
+			$messages[$k]['entity'] = $v;
+			$messages[$k]['no_of_files'] =  count( Library::files_by_module_id('message', $v->id() ) );
+		}
+		
+		$data['list'] = $messages;		
     }
 
     /*
@@ -226,6 +233,9 @@ class MessageController extends ControllerBase {
 
         $data['page_type'] = 'view';
         $data['message'] = $message;
+					
+		$data['sender'] = Member::load( $message->send_id->target_id );
+		
 		$data['files'] =  Library::files_by_module_id('message', $message->id() );
 		$data['rendered_files'] = Message::renderViewFiles($data['files']);		
     }
