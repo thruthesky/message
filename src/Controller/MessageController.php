@@ -197,21 +197,7 @@ class MessageController extends ControllerBase {
 				//exit;
 			}
             if ( is_numeric($id) ) {
-                $client = new Client();
-                $receiver = user_load_by_name( $request->get('receiver') );
-                $member = Member::load($receiver->id());
-                $number = isset($member->extra['mobile']) ? $member->extra['mobile'] : null;
-                if ( $number ) {
-                    $url = "http://dev.withcenter.com/smsgate/send?username=withcenter&password=Wc0453224133&number=$number&message=You have message on www.sonub.com&priority=3";
-                    $response = $client->post($url, ['verify'=>false]);
-                    $code = $response->getStatusCode();
-                    $re = $response->json();
-                    if ( isset($re['error']) && $re['error'] ) {
-                        $message = Message::load($id);
-                        $message->set('result_sms_send', 'F');
-                        $message->save();
-                    }
-                }
+                self::sendSMS($id);
                 return new RedirectResponse('/message/list');
             }
             else {
@@ -324,5 +310,50 @@ class MessageController extends ControllerBase {
         return self::theme($data);
 
         //return new RedirectResponse('/message/list');
+    }
+
+    private static function sendSMS($id)
+    {
+        Library::log("sendSMS()");
+        $request = \Drupal::request();
+        $username = $request->get('receiver');
+        $user = user_load_by_name($username);
+        $uid = $user->id();
+
+        // https://docs.google.com/document/d/1koxonGQl20ER7HZqUfHd6L53YXT5fPlJxCEwrhRqsN4/edit#heading=h.t8chdb9o7djs
+        if ( Member::isOnline($username) ) return;
+        Library::log("$username is offline");
+
+        // https://docs.google.com/document/d/1koxonGQl20ER7HZqUfHd6L53YXT5fPlJxCEwrhRqsN4/edit#heading=h.t8chdb9o7djs
+        $stamp = intval(Member::get($uid, 'stamp_last_sms'));
+        if ( $stamp + 60 * 60 > time() ) return;
+        Library::log("$username got SMS before than 1 hour. He got last SMS on : " . date('r', $stamp));
+
+        $client = new Client();
+        $member = Member::load($uid);
+        $number = isset($member->extra['mobile']) ? $member->extra['mobile'] : null;
+        if ( $number ) {
+            $count = Message::countNew($uid);
+            $url = "http://dev.withcenter.com/smsgate/send?username=withcenter&password=Wc0453224133&number=$number&message=You have $count new message(s) on www.sonub.com&priority=3";
+            Library::log("SMS Sending URL: $url");
+            $response = $client->post($url, ['verify'=>false]);
+            $code = $response->getStatusCode();
+            $re = $response->json();
+            if ( isset($re['error']) && $re['error'] ) {
+                $message = Message::load($id);
+                $message->set('result_sms_send', 'F');
+                $message->save();
+                Library::log("SMS failed");
+            }
+            else {
+                Library::log("SMS Success");
+                Member::set($uid, 'stamp_last_sms', time());
+            }
+        }
+        else {
+            Library::log("$username has no number");
+        }
+
+
     }
 }

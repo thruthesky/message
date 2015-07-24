@@ -25,6 +25,12 @@ use Drupal\file\Entity\File;
  */
 class Message extends ContentEntityBase implements MessageInterface {
 
+    public static function countNew($uid) {
+        $result = db_query("SELECT COUNT(*) FROM we_message WHERE user_id=$uid AND checked=0");
+        $count = $result->fetchField();
+        return $count;
+    }
+
     public static function sendForm(&$data) {		
         $request = \Drupal::request();
         return self::send(
