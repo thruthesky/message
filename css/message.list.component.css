@@ -155,12 +155,27 @@ section.message .page-wrapper span{
 	font-weight:bold;
 }
 
-section.message .page-wrapper a.arrow{
-	position: relative;
-	top: 3px;
+section.message .page-wrapper a{
 	display:inline-block;
-	margin-left:2px;
+	position: relative;
+	top: -1px;	
+	height:17px;
+	padding:1px 5px 2px 5px;
+	border-radius:2px;
+	background-color:#2ecc71;
+	color:#fff;
 	line-height:100%;
+	box-sizing:border-box;
+}
+
+section.message .page-wrapper a.selected{
+	color:yellow;
+}
+
+section.message .page-wrapper a.arrow{
+	top:3px;
+	padding:0;	
+	background-color:transparent;	
 }
 
 section.message .page-wrapper a.arrow.left{

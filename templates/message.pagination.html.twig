@@ -1,0 +1,53 @@
+<div class='page-wrapper'>
+	{% set show_pagination = 5 %}
+
+	{% if data.page_num <= 1 %}
+		{% set start = 1 %}
+		{% set end = data.per_page %}
+		
+		{% set paging_start = 1 %}
+		{% set paging_end = show_pagination %}
+	{% else %}
+		{% set start = data.page_num * data.per_page - data.per_page + 1 %}
+		{% set end = data.page_num * data.per_page %}
+		
+		{% set paging_start = ( ( data.page_num / show_pagination ) | round(0, 'ceil') ) * show_pagination - show_pagination + 1 %}
+		{% set paging_end = ( ( data.page_num / show_pagination ) | round(0, 'ceil') ) * show_pagination %}				
+	{% endif %}
+	
+	{% if data.total_pages < paging_end %}
+		{% set paging_end = data.total_pages %}
+	{% endif %}
+	
+	
+	{% if end > data.total_messages %}
+		{% set end = data.total_messages %}
+	{% endif %}
+
+	{% set prev_page_url = '/message/' ~ data.page ~ '?page_num='~( data.page_num - 1 ) %}
+	{% set next_page_url = '/message/' ~ data.page ~ '?page_num='~( data.page_num + 1 ) %}
+
+	{% if data.page_num <= 1 %}
+		{% set prev_page_url = '#' %}
+	{% endif %}
+	{% if data.page_num >= data.total_pages %}
+		{% set next_page_url = '#' %}
+	{% endif %}
+	
+	<span>{{ start }} - {{ end }}</span> of <span>{{ data.total_messages }}</span>
+	
+	<a href='{{ prev_page_url }}' class='arrow left'><img src='/{{ dir_message }}/img/arrow_left.png'/></a>
+	{% if paging_start > 1 %}
+		{% set page_url = '/message/' ~ data.page ~ '?page_num=' ~ ( paging_start - show_pagination ) %}
+		<a href='{{ page_url }}'>Prev 5</a>
+	{% endif %}
+	{% for i in paging_start..paging_end %}
+		{% set page_url = '/message/' ~ data.page ~ '?page_num=' ~ i %}
+		<a class='page single{{ data.page_num == i ? " selected"}}'href='{{ page_url }}'/>{{ i }}</a>
+	{% endfor %}
+	{% if data.total_pages > paging_end %}
+		{% set page_url = '/message/' ~ data.page ~ '?page_num=' ~ ( paging_end + 1 ) %}
+		<a href='{{ page_url }}'>Next 5</a>
+	{% endif %}
+	<a href='{{ next_page_url }}' class='arrow right'><img src='/{{ dir_message }}/img/arrow_right.png'/></a>
+</div>

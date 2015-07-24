@@ -42,31 +42,7 @@
             {% endfor %}
         </div>
     </form>
-    <div class='page-wrapper'>
-        {% if data.page_num <= 1 %}
-            {% set start = 1 %}
-            {% set end = data.per_page %}
-        {% else %}
-            {% set start = data.page_num * data.per_page - data.per_page + 1 %}
-            {% set end = data.page_num * data.per_page %}
-        {% endif %}
-
-        {% if end > data.total_messages %}
-            {% set end = data.total_messages %}
-        {% endif %}
-
-        {% set prev_page_url = '?page_num='~( data.page_num - 1 ) %}
-        {% set next_page_url = '?page_num='~( data.page_num + 1 ) %}
-
-        {% if data.page_num <= 1 %}
-            {% set prev_page_url = '#' %}
-        {% endif %}
-        {% if data.page_num >= data.total_pages %}
-            {% set next_page_url = '#' %}
-        {% endif %}
-
-        <span>{{ start }} - {{ end }}</span> of <span>{{ data.total_messages }}</span><a href='{{ prev_page_url }}' class='arrow left'><</a><a href='{{ next_page_url }}' class='arrow right'>></a>
-    </div>
+    {% include dir_message ~ '/templates/message.pagination.html.twig' %}
 {% else %}
     <h2>No messages found</h2>
 {% endif %}
