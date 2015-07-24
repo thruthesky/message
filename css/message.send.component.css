@@ -64,6 +64,7 @@
 }
 
 .send .message-send .buttons > span.file-upload{
+	float:left;
 	position: relative;
 	height: 35px;
 	width:93px;
@@ -93,17 +94,24 @@
 	cursor:pointer;
 }
 
-.send .message-send .buttons > input[type='submit']{
+.send .message-send .buttons .send-button-wrapper{
+	overflow:hidden;
+	padding: 4px 5px;
+}
+
+.send .message-send .buttons input[type='submit']{
 	float: right;
 	display: inline-block;
+	width:100%;
 	padding: 4px 10px 7px 10px;
-	margin: 3px 5px 0 0;
+	/*margin: 3px 5px 0 0;*/
 	border: 0;
 	border-radius: 2px;
 	background-color: #1886c5;
 	font-size: 1.3em;
 	font-weight: bold;	
 	color: #fff;
+	box-sizing:border-box;
 }
 
 
