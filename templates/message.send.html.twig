@@ -6,7 +6,7 @@
 			<input type='hidden' name='fid'>
 			<input type='hidden' name='action'>
 			{{ html.input({'type':'text','name':'receiver', 'id':'message-receiver', 'class':'receiver', 'label':'To:', 'placeholder':'Input Recipient', 'value':data.input.receiver}) }}
-			{{ html.input({'type':'text','name':'title', 'id':'message-title', 'class':'title', 'label':'Subject:', 'placeholder':'Input Title'}) }}
+			{{ html.input({'type':'text','name':'title', 'id':'message-title', 'class':'title', 'label':'Subject:', 'placeholder':'Input Title', 'value':data.input.reply_subject}) }}
 			{{ html.textarea({'name':'content', 'id':'message-content', 'class':'content', 'label':'Content', 'placeholder':'Input Content'}) }}		
 			<div class='message-uploaded-files clearfix'>
 				
