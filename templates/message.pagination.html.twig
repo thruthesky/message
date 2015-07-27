@@ -35,10 +35,10 @@
 	{% endif %}
 	
 	<span>{{ start }} - {{ end }}</span> of <span>{{ data.total_messages }}</span>
-	
-	<a href='/message/{{ data.page }}?page_num=1' class='arrow first'><img src='/{{ dir_message }}/img/arrow_first.png'/></a>
-	<a href='{{ prev_page_url }}' class='arrow left'><img src='/{{ dir_message }}/img/arrow_left.png'/></a>	
+		
 	{% if paging_start > 1 %}
+		<a href='/message/{{ data.page }}?page_num=1' class='arrow first'><img src='/{{ dir_message }}/img/arrow_first.png'/></a>
+		<a href='{{ prev_page_url }}' class='arrow left'><img src='/{{ dir_message }}/img/arrow_left.png'/></a>	
 		{% set page_url = '/message/' ~ data.page ~ '?page_num=' ~ ( paging_start - show_pagination ) %}
 		<a href='{{ page_url }}'>Prev 5</a>
 	{% endif %}
@@ -49,7 +49,7 @@
 	{% if data.total_pages > paging_end %}
 		{% set page_url = '/message/' ~ data.page ~ '?page_num=' ~ ( paging_end + 1 ) %}
 		<a href='{{ page_url }}'>Next 5</a>
-	{% endif %}
-	<a href='{{ next_page_url }}' class='arrow right'><img src='/{{ dir_message }}/img/arrow_right.png'/></a>
+		<a href='{{ next_page_url }}' class='arrow right'><img src='/{{ dir_message }}/img/arrow_right.png'/></a>
 	<a href='/message/{{ data.page }}?page_num={{ data.total_pages }}' class='arrow last'><img src='/{{ dir_message }}/img/arrow_last.png'/></a>
+	{% endif %}	
 </div>
