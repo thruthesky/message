@@ -190,7 +190,7 @@ class MessageController extends ControllerBase {
         if ( $request->get('mode') == 'submit' ) {
             $id = Message::sendForm($data);
 			$fids = $request->get("fid");
-						
+			
 			if( !empty( $fids ) ){
 				//di( $fids );
 				Message::updateUploadedFiles( $id );
@@ -198,7 +198,10 @@ class MessageController extends ControllerBase {
 			}
             if ( is_numeric($id) ) {
                 self::sendSMS($id);
-                return new RedirectResponse('/message/list');
+				$message = Message::load( $id );
+				if( $message->user_id->target_id != Library::myuid() ) $redirect_url = '/message/sent';
+				else $redirect_url = '/message/list';
+                return new RedirectResponse( $redirect_url );
             }
             else {
                 $data['error']  = $id;
