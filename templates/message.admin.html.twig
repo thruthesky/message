@@ -20,7 +20,8 @@
 				<td><span>Sender</td></span>
 				<td><span>Receiver</td></span>
 				<td width='40%'>Subject</td></span>
-				<td><span>Date</td></span>
+				<td><span>Date of post</td></span>
+				<td><span>Date Viewed</td></span>
 				<td><span>Files</td></span>
 			</tr>
 			{% for m in data.list %}
@@ -30,6 +31,14 @@
 					<td><span>{{ m.entity.send_id.entity.name.value }}</td></span>
 					<td><span><a href='/message/view?id={{ m.entity.id.value }}'>{{ m.entity.title.value }}</a></td></span>
 					<td><span>{{ m.entity.created.value | date("M d, Y") }}</td></span>
+					
+					{% if m.entity.checked.value %}
+						{% set date_viewed = m.entity.checked.value | date("M d, Y") %}
+					{% else %}
+						{% set date_viewed = "Not Viewed" %}
+					{% endif %}
+					
+					<td><span>{{ date_viewed }}</td></span>
 					<td><span>{{ m.no_of_files }}</td></span>
 				</tr>
 			{% endfor %}
