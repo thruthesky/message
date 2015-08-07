@@ -16,6 +16,7 @@
 		{% include dir_message ~ '/templates/message.hidden.inputs.html.twig' %}
         <table class='mall-table item' cellpadding=0 cellspacing=0 width='100%'>
 			<tr class='header'>
+				<td><span>idx</td></span>
 				<td><span>Sender</td></span>
 				<td><span>Receiver</td></span>
 				<td width='40%'>Subject</td></span>
@@ -24,9 +25,10 @@
 			</tr>
 			{% for m in data.list %}
 				<tr valign='top'>
-					<td><span>{{ m.entity.user_id.entity.name.value }}</td></span>
+					<td><span><a href='/message/view?id={{ m.entity.id.value }}'>{{ m.entity.id.value }}</td></a></span>
+					<td><span>{{ m.entity.user_id.entity.name.value }}</td></span>					
 					<td><span>{{ m.entity.send_id.entity.name.value }}</td></span>
-					<td><span>{{ m.entity.title.value }}</td></span>
+					<td><span><a href='/message/view?id={{ m.entity.id.value }}'>{{ m.entity.title.value }}</a></td></span>
 					<td><span>{{ m.entity.created.value | date("M d, Y") }}</td></span>
 					<td><span>{{ m.no_of_files }}</td></span>
 				</tr>
