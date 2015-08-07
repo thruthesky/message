@@ -23,6 +23,15 @@ class MessageController extends ControllerBase {
         $data['input'] = self::input();
         if ( ! self::checkLogin($data) ) return self::theme($data);
         if ( $page == 'list' || $page == 'unread' || $page == 'sent' ) $page = 'collect';
+		if( $page == 'admin' ){
+			$member = Member::load( Library::myuid() );
+			$role = $member->roles->target_id;
+			if( $role != 'administrator' ){
+				$data['error'] = 'You are not an admin';
+				$data['page'] = 'admin';				
+			}			
+			$page = 'collect';
+		}
         if ( $render = self::$page($data) )  return $render;
         else return self::theme($data);
     }
@@ -56,9 +65,10 @@ class MessageController extends ControllerBase {
             $result = $result->condition( 'checked' , 0 );
         }
         else if( $data['page'] == 'sent' ) $result = $result->condition( 'send_id' , self::uid() );
+		else if( $data['page'] == 'admin' ){}
 		
 		/*search*/
-		if( $search_mode == true ){
+		if( $search_mode == true && !empty( $input['keyword'] ) ){
 			//$db->condition('url_from', '%'.$keyword_from.'%', 'LIKE');
 			$ors = db_or();
 			$ors->condition('title', '%'.$input['keyword'].'%', 'LIKE');
@@ -71,7 +81,7 @@ class MessageController extends ControllerBase {
 				$ors->condition('user_id', '%'.$member->id().'%', 'LIKE');
 			}
 			
-			$result = $result->condition( $ors );
+			$result = $result->condition( $ors );			
 		}
 		/*eo search*/
 		
@@ -81,8 +91,11 @@ class MessageController extends ControllerBase {
         while ( $row = $result->fetchAssoc(\PDO::FETCH_ASSOC) ) {
             $total_ids[] = $row['id'];
         }
+		if( !empty( $input['limit'] ) ){
+			$per_page = $input['limit'];			
+		}
+        else $per_page = 10;
 
-        $per_page = 10;
         $total_messages = count( $total_ids );
         $total_pages = ceil( count( $total_ids ) / $per_page );
 
@@ -111,6 +124,7 @@ class MessageController extends ControllerBase {
             $result_paged = $result_paged->condition( 'checked' , 0 );
         }
         else if( $data['page'] == 'sent' ) $result_paged = $result_paged->condition( 'send_id' , self::uid() );
+		else if( $data['page'] == 'admin' ){}
 		
 		/*search*/
 		if( $search_mode == true ){
@@ -133,8 +147,7 @@ class MessageController extends ControllerBase {
         $ids = [];
         while ( $row = $result_paged->fetchAssoc(\PDO::FETCH_ASSOC) ) {
             $ids[] = $row['id'];
-        }
-
+        }		
         $data['total_messages'] = $total_messages;
         $data['total_pages'] = $total_pages;
         $data['page_num'] = $page_num;

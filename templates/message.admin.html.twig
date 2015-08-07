@@ -1,0 +1,46 @@
+{% import dir_macro ~ '/functions.html.twig' as html %}
+
+<form action='/message/search/{{ data.page }}'>
+	<input type='text' name='keyword' placeholder="Search Message..." value='{{ input.keyword }}'>
+	<select name='limit'>
+		<option value='10' {{ input.limit == 10 ? "selected" }}>10</option>
+		<option value='20' {{ input.limit == 20 ? "selected" }}>20</option>
+		<option value='40' {{ input.limit == 40 ? "selected" }}>40</option>
+		<option value='100' {{ input.limit == 100 ? "selected" }}>100</option>
+	</select>
+	<input type='submit' value='Search'>	
+</form>
+
+{% if data.list %}
+    <form name="list" action="">
+		{% include dir_message ~ '/templates/message.hidden.inputs.html.twig' %}
+        <table class='mall-table item' cellpadding=0 cellspacing=0 width='100%'>
+			<tr class='header'>
+				<td><span>Sender</td></span>
+				<td><span>Receiver</td></span>
+				<td width='40%'>Subject</td></span>
+				<td><span>Date</td></span>
+				<td><span>Files</td></span>
+			</tr>
+			{% for m in data.list %}
+				<tr valign='top'>
+					<td><span>{{ m.entity.user_id.entity.name.value }}</td></span>
+					<td><span>{{ m.entity.send_id.entity.name.value }}</td></span>
+					<td><span>{{ m.entity.title.value }}</td></span>
+					<td><span>{{ m.entity.created.value | date("M d, Y") }}</td></span>
+					<td><span>{{ m.no_of_files }}</td></span>
+				</tr>
+			{% endfor %}
+		</table>
+    </form>
+    {% include dir_message ~ '/templates/message.pagination.html.twig' %}
+{% else %}
+    <h2>No messages found</h2>
+{% endif %}
+
+{# TEMPORARY ONLY!! must find another way#}
+<style>
+	.td-left-side-bar{
+		display:none;
+	}
+</style>

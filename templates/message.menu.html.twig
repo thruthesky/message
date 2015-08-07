@@ -2,7 +2,11 @@
 	{% set self_id =  data.member.id %}
 	{% set send_id =  data.message.send_id.target_id %}
 {% endif %}
-
+{% if data.page == 'admin' %}
+	<div class='mall-admin-page'>
+		<div class='title'>Message Admin Page</div>
+	</div>
+{% else %}
 <div class='menu-wrapper clearfix'>
 	<div class="menu clearfix">
 		<table cellpadding=0 cellspacing=0 width='100%'>
@@ -63,3 +67,4 @@
 		<a href='/message/send' class='new-message'>New message</a>
 	</div>
 </div>
+{% endif %}
