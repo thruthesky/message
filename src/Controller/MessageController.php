@@ -210,7 +210,9 @@ class MessageController extends ControllerBase {
 				//exit;
 			}
             if ( is_numeric($id) ) {
-                self::sendSMS($id);
+				if( !empty( $request->get('custom_sms_message') ) $custom_message = $request->get('custom_sms_message');
+				else $custom_message = null;
+                self::sendSMS($id,$custom_message);
 				$message = Message::load( $id );
 				if( $message->user_id->target_id != Library::myuid() ) $redirect_url = '/message/sent';
 				else $redirect_url = '/message/list';
@@ -328,7 +330,7 @@ class MessageController extends ControllerBase {
         //return new RedirectResponse('/message/list');
     }
 
-    private static function sendSMS($id)
+    private static function sendSMS( $id, $custom_message = null )
     {
         Library::log("sendSMS()");
         $request = \Drupal::request();
@@ -348,28 +350,54 @@ class MessageController extends ControllerBase {
         $client = new Client();
         $member = Member::load($uid);
         $number = isset($member->extra['mobile']) ? $member->extra['mobile'] : null;
-        if ( $number ) {
+        if ( $number ) {			
+			
+
+			
             $count = Message::countNew($uid);
-            $url = "http://dev.withcenter.com/smsgate/send?username=withcenter&password=Wc0453224133&number=$number&message=You have $count new message(s) on www.sonub.com&priority=3";
-            Library::log("SMS Sending URL: $url");
-            $response = $client->post($url, ['verify'=>false]);
-            $code = $response->getStatusCode();
-            $re = $response->json();
-            if ( isset($re['error']) && $re['error'] ) {
-                $message = Message::load($id);
-                $message->set('result_sms_send', 'F');
-                $message->save();
-                Library::log("SMS failed");
-            }
-            else {
-                Library::log("SMS Success");
-                Member::set($uid, 'stamp_last_sms', time());
-            }
+			if( !empty( $custom_message ) ) $message = $custom_message;
+			else $message = "You have $count new message(s) on www.sonub.com";
+			$number = self::adjustNumber( $number );
+			
+			if ( ! is_numeric($number) ) $error = "$number - Number is not Numeric";
+            if ( strlen($number) != 11 ) $error = "$number - Number must be 11 digits. This number $re[number] is not in 11 digits.";
+            if ( $number[2] == '0' && $number[3] == '0' ) $error = "$number - Number cannot have 0 on the 3rd and 4th position of the numbers.";
+            if ( strlen($message) > 159 ) $error = "$number - Message must be shorter than 159 letters.";
+			
+			if( !empty( $error ) ){
+				Library::log( $error );
+			}
+			else{		
+				$url = "http://dev.withcenter.com/smsgate/send?username=withcenter&password=Wc0453224133&number=$number&message=$message&priority=3";
+				Library::log("SMS Sending URL: $url");
+				$response = $client->post($url, ['verify'=>false]);
+				$code = $response->getStatusCode();
+				$re = $response->json();
+				if ( isset($re['error']) && $re['error'] ) {
+					$message = Message::load($id);
+					$message->set('result_sms_send', 'F');
+					$message->save();
+					Library::log("SMS failed");
+				}
+				else {
+					Library::log("SMS Success");
+					Member::set($uid, 'stamp_last_sms', time());
+				}
+			}
         }
         else {
             Library::log("$username has no number");
         }
 
 
+    }
+	
+	private static function adjustNumber($number)
+    {
+        $number = preg_replace("/[^0-9]/", '', $number); // remove all characters
+        $number = str_replace("639", "09", $number);
+        $number = str_replace("630", "0", $number);
+        $number = str_replace("63", "0", $number);
+        return $number;
     }
 }
