@@ -210,7 +210,7 @@ class MessageController extends ControllerBase {
 				//exit;
 			}
             if ( is_numeric($id) ) {
-				if( !empty( $request->get('custom_sms_message') ) $custom_message = $request->get('custom_sms_message');
+				if( !empty( $request->get('custom_sms_message') ) ) $custom_message = $request->get('custom_sms_message');
 				else $custom_message = null;
                 self::sendSMS($id,$custom_message);
 				$message = Message::load( $id );
