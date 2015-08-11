@@ -27,8 +27,8 @@
 			{% for m in data.list %}
 				<tr valign='top'>
 					<td><span><a href='/message/view?id={{ m.entity.id.value }}'>{{ m.entity.id.value }}</td></a></span>
-					<td><span>{{ m.entity.user_id.entity.name.value }}</td></span>					
 					<td><span>{{ m.entity.send_id.entity.name.value }}</td></span>
+					<td><span>{{ m.entity.user_id.entity.name.value }}</td></span>										
 					<td><span><a href='/message/view?id={{ m.entity.id.value }}'>{{ m.entity.title.value }}</a></td></span>
 					<td><span>{{ m.entity.created.value | date("M d, Y") }}</td></span>
 					
