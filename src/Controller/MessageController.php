@@ -209,7 +209,7 @@ class MessageController extends ControllerBase {
 				Message::updateUploadedFiles( $id );
 				//exit;
 			}
-            if ( is_numeric($id) ) {
+            if ( is_numeric($id) ) {			
 				if( !empty( $request->get('custom_sms_message') ) ) $custom_message = $request->get('custom_sms_message');
 				else $custom_message = null;
                 self::sendSMS($id,$custom_message);
@@ -332,6 +332,7 @@ class MessageController extends ControllerBase {
 
     private static function sendSMS( $id, $custom_message = null )
     {
+
         Library::log("sendSMS()");
         $request = \Drupal::request();
         $username = $request->get('receiver');
@@ -350,25 +351,35 @@ class MessageController extends ControllerBase {
         $client = new Client();
         $member = Member::load($uid);
         $number = isset($member->extra['mobile']) ? $member->extra['mobile'] : null;
-        if ( $number ) {			
-			
 
-			
+        if ( $number ) {				
             $count = Message::countNew($uid);
 			if( !empty( $custom_message ) ) $message = $custom_message;
 			else $message = "You have $count new message(s) on www.sonub.com";
-			$number = self::adjustNumber( $number );
 			
-			if ( ! is_numeric($number) ) $error = "$number - Number is not Numeric";
-            if ( strlen($number) != 11 ) $error = "$number - Number must be 11 digits. This number $re[number] is not in 11 digits.";
-            if ( $number[2] == '0' && $number[3] == '0' ) $error = "$number - Number cannot have 0 on the 3rd and 4th position of the numbers.";
+			//if multi number, only do send sms on the first number
+			$multi_number = explode( "/", $number );			
+			if( count( $multi_number  ) > 1 ){
+				foreach( $multi_number as $mn ){					
+					$adjusted_mn = self::adjustNumber( $mn );					
+					if( $adjusted_mn != false ){
+						$number = $adjusted_mn;				
+						break;
+					}
+				}				
+			}
+			else{
+				$number = self::adjustNumber( $multi_number[0] );
+			}
+						
             if ( strlen($message) > 159 ) $error = "$number - Message must be shorter than 159 letters.";
 			
 			if( !empty( $error ) ){
 				Library::log( $error );
 			}
-			else{		
-				$url = "http://dev.withcenter.com/smsgate/send?username=withcenter&password=Wc0453224133&number=$number&message=$message&priority=3";
+			else{						
+				$url = "http://sap.withcenter.com/smsgate/api?id=admin&password=1234&method=sendSms&number=$number&message=$message&priority=9";
+				//$url = "http://dev.withcenter.com/smsgate/send?username=withcenter&password=Wc0453224133&number=$number&message=$message&priority=3";				
 				Library::log("SMS Sending URL: $url");
 				$response = $client->post($url, ['verify'=>false]);
 				$code = $response->getStatusCode();
@@ -394,10 +405,19 @@ class MessageController extends ControllerBase {
 	
 	private static function adjustNumber($number)
     {
+		$error = [];
+	
         $number = preg_replace("/[^0-9]/", '', $number); // remove all characters
         $number = str_replace("639", "09", $number);
         $number = str_replace("630", "0", $number);
         $number = str_replace("63", "0", $number);
+		
+		if ( ! is_numeric($number) ) return false;
+        if ( strlen($number) != 11 ) return false;
+        if ( $number[0] != '0' ) return false;
+        if ( $number[1] != '9' ) return false;
+        if ( $number[2] == '0' && $number[3] == '0' ) return false;	
+		
         return $number;
     }
 }
