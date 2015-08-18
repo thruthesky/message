@@ -377,13 +377,15 @@ class MessageController extends ControllerBase {
 			if( !empty( $error ) ){
 				Library::log( $error );
 			}
-			else{						
-				$url = "http://sap.withcenter.com/smsgate/api?id=admin&password=1234&method=sendSms&number=$number&message=$message&priority=9";
-				//$url = "http://dev.withcenter.com/smsgate/send?username=withcenter&password=Wc0453224133&number=$number&message=$message&priority=3";				
+			else{
+				$tag = "sonub.".Library::myUid().".".date("ymdhis",time());			
+				$url = "http://sap.withcenter.com/smsgate/api?id=admin&password=1234&method=sendSms&number=$number&message=$message&priority=9&tag=$tag";				
+				//$url = "http://sapcms2.org/smsgate/api?id=admin&password=1111&method=sendSms&number=$number&message=$message&priority=9";
+				//$url = "http://dev.withcenter.com/smsgate/send?username=withcenter&password=Wc0453224133&number=$number&message=$message&priority=3";	
 				Library::log("SMS Sending URL: $url");
 				$response = $client->post($url, ['verify'=>false]);
 				$code = $response->getStatusCode();
-				$re = $response->json();
+				$re = $response->json();				
 				if ( isset($re['error']) && $re['error'] ) {
 					$message = Message::load($id);
 					$message->set('result_sms_send', 'F');
