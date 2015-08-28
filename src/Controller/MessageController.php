@@ -358,7 +358,10 @@ class MessageController extends ControllerBase {
 			else $message = "You have $count new message(s) on www.sonub.com";
 			
 			//if multi number, only do send sms on the first number
-			$multi_number = explode( "/", $number );			
+			
+			if( strpos( "/", $number ) !== false ) $multi_number = explode( "/", $number );
+			if( empty( $multi_number ) ) $multi_number = explode( " ", $number );
+						
 			if( count( $multi_number  ) > 1 ){
 				foreach( $multi_number as $mn ){					
 					$adjusted_mn = self::adjustNumber( $mn );					
